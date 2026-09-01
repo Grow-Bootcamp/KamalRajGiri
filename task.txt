@@ -1,0 +1,26 @@
+Week 1: HTML5, CSS & JavaScript Fundamentals
+Day 1: HTML5 & CSS Fundamentals, JS Basics
+Description
+Build a strong foundation in HTML5 semantic structure, CSS box model and layout techniques, and core
+JavaScript data handling by studying the concepts below and applying them through short practice
+exercises.
+Scope
+● Study the CSS Box Model, selectors, pseudo-classes and pseudo-elements.
+● Study CSS layout and positioning techniques (Flexbox / Grid / position property).
+● Study JavaScript datatypes (primitive and reference types) and operators (arithmetic, comparison,
+logical, assignment).
+● Practice building small HTML/CSS snippets applying box model and positioning concepts.
+● Document the day's key learnings, findings, and code snippets in a dedicated learning-log file
+(Markdown/Doc) and commit it to the repository.
+● Raise a GitHub Pull Request for the day's practice code/work and send it to your mentor for review.
+Acceptance Criteria
+● Can explain the CSS Box Model and identify margin/border/padding/content in a given layout.
+● Can correctly use basic, pseudo-class, and pseudo-element selectors in a sample stylesheet.
+● Can build a simple layout using CSS positioning/Flexbox without visual bugs.
+● Can list JavaScript's primitive and reference datatypes and demonstrate each operator type with a
+code example.
+● A daily learning-log file capturing the day's topics and key takeaways is created/updated and
+committed to the repository.
+● A GitHub PR is raised for the day's work and sent to the mentor for review.
+● The learning-log file link and the PR link are both posted in the Zoho task's comment section and in
+the corresponding Microsoft Teams comment/thread.
