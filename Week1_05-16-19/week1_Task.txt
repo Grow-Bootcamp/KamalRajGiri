@@ -1,0 +1,13 @@
+Week 1 Project: Todo App - Responsive UI
+Description
+Apply the HTML5, CSS, and JavaScript fundamentals learned this week by building a fully responsive user
+interface for a Todo application.
+Scope
+● Design and build the static UI/UX layout for a Todo App using HTML5 and CSS.
+● Ensure the layout is responsive across mobile, tablet, and desktop breakpoints.
+● Apply box model, selector, and positioning concepts learned during the week.
+Acceptance Criteria
+● Todo App UI renders correctly across common screen sizes (mobile/tablet/desktop).
+● Layout uses semantic HTML5 and follows the CSS concepts studied this week.
+● No horizontal scroll or broken layout on any tested breakpoint.
+● Code is committed and shared for review.

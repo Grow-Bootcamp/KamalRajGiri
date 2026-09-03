@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callbacks , Higher-Order Functions & Data Transformation </title>
+</head>
+<body>
+    <H1>Callbacks , Higher-Order Functions & Data Transformation </H1>
+
+    <script>
+console.log("Callbacks , Higher-Order Functions & Data Transformation");
+
+// A callback function is a function passed to another function as an argument, so that the receiving function can call it later.
+
+function greet(name) {
+    console.log("Hello " + name);
+}
+
+function processUser(callback) {
+    callback("Kamal");
+}
+
+processUser(greet);
+
+// greet   → function
+// greet() → result of executing function
+
+// A higher-order function is a function that takes one or more functions as arguments, or returns a function as its result.
+function add(a, b) {
+    return a + b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function calculate(operation, x, y) {
+    return operation(x, y);
+}
+
+console.log(calculate(add, 2, 3)); // 5
+console.log(calculate(multiply, 2, 3)); // 6
+// calculate takes a function (add or multiply) as an argument and calls it with the provided x and y values . 
+// here add and multiply are callback functions passed to the higher-order function calculate.
+
+
+
+// Data transformation is the process of converting data from one format or structure to another. In JavaScript, this can be done using higher-order functions like map, filter, and reduce.    
+const user = {
+    name: "Kamal",
+    age: 20,
+    city: "Kanchanpur"
+};
+
+const entries = Object.entries(user);
+console.log(entries);
+
+const backuser = Object.fromEntries(entries);
+console.log(backuser);
+</script>
+</body>
+</html>

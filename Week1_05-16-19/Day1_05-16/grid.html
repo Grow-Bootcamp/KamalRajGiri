@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid in HTML</title>
+    <style>
+        .grid{
+            display: grid;
+            /* grid-template-columns: 100px 100px 200px ;
+            grid-template-rows: 100px 100px 200px; */
+            grid-template-areas:"nav nav nav"
+            "main main aside"
+            "section section aside"
+            "footer footer footer";
+            gap: 10px;
+        }
+        .box{
+            border: 2px solid red;
+            height: 100px;      
+        }
+        .grid1{
+            grid-area: nav;
+        }
+        .grid2{
+            grid-area: main;
+        }
+        .grid3{
+            grid-area: aside;
+        }
+        .grid4{
+            grid-area: section;
+        }
+        .grid5{
+            grid-area: footer;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid">
+        <div class="box grid1"></div>
+        <div class="box grid2"></div>
+        <div class="box grid3"></div>
+        <div class="box grid4"></div>
+        <div class="box grid5"></div>
+        <div class="box grid6"></div>
+        <div class="box grid7"></div>
+        <div class="box grid8"></div>
+    </div>
+</body>
+</html>
