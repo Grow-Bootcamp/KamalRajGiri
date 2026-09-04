@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Object Key </title>
+</head>
+<body>
+    <script>
+        const user = {
+    name: "Kamal",
+    age: 20,
+    city: "Kanchanpur"
+};
+result = Object.keys(user);
+console.log(result);
+result1 = Object.values(user);
+console.log(result1);
+result2 = Object.entries(user);
+console.log(result2);
+
+
+// Object Assign()  copies properties from one or more source objects into a target object.
+const target = {
+    a : 1
+}
+const source = {
+    b : 2
+}
+const source2 ={
+    c : 3
+}
+console.log(target);
+Object.assign(target,source,source2); // this modifies the target object 
+console.log(target);
+ // we use {} as target to keep our our original objects safe
+ const combined = Object.assign({},target,source,source2)
+ console.log(combined);
+
+ // when a common key comes from different object source the first ones value is overwritten by last ones value 
+
+ //spread operator : A very common modern alternative to Object.assign()
+ const usera = {
+    name : "AAgyat",
+    age : 23
+ };
+ const copy ={
+    ...usera
+ };
+ const userb ={
+    city : "MNR"
+ }
+ console.log(copy);
+ const copy1 ={
+    ...usera,
+    ...userb
+ }
+ console.log(copy1)
+
+// Object Destructing : this is a special syntax that allows us to "unpack" arrays or objects into a bunch of variables, as sometimes that is more convenient.
+
+const userx ={
+    name : "Kamal",
+    age : 20,
+    city : "Kanchanpur"
+}
+
+const {name, age, city} = userx;
+console.log(name, age, city);
+
+// renaming variables while destructuring
+const {name: userName, age: userAge, city: userCity} = userx;
+console.log(userName, userAge, userCity);
+
+//Object Destructuring with Default Values
+const usery ={
+    name : "Kamal",
+    age : 20
+}
+const {name: userName1, age: userAge1, city: userCity1 = "Unknown"} = usery;
+console.log(userName1, userAge1, userCity1);
+
+// Object.hasOwn() method returns a boolean indicating whether the object has the specified property as its own property (as opposed to inheriting it).
+const userz = {
+    name : "Kamal",
+    age : 20
+}
+console.log(Object.hasOwn(userz, "name")); // true
+console.log(Object.hasOwn(userz, "city")); // false
+
+
+// Object Reference Behaviour 
+
+const user1 = {
+    name : "Kamal",
+    age : 20
+}
+const user2 = user1; // user2 is a reference to the same object as user1
+user2.name = "Alice"; // This will also change the name in user1
+console.log(user1.name); // Alice
+console.log(user2.name); // Alice
+
+
+// Object Equality Comparison
+const a ={
+    x:10
+};
+const b ={
+    x:10
+};
+ console.log(a===b); // false because they are different objects in memory
+ const c = a; // c is a reference to the same object as a
+ console.log(a===c); // true because they are the same object in memory
+
+// Object. freeze() : we can use Object.freeze() to make an object immutable, meaning its properties cannot be changed, added, or removed.
+const user3 = {
+    name : "Kamal",
+    age : 20
+}
+Object.freeze(user3);
+user3.name = "Alice"; // This will not change the name property
+console.log(user3.name); // Kamal
+
+// Object.seal() : we can use Object.seal() to prevent new properties from being added to an object and mark all existing properties as non-configurable. However, the values of existing properties can still be changed.
+
+const user4 = {
+    name : "Kamal", 
+    age : 20
+}
+Object.seal(user4);
+user4.name = "Alice"; // This will change the name property
+console.log(user4.name); 
+user4.city = "MNR"; // This will not add a new property
+console.log(user4.city); // undefined
+
+
+
+
+
+    </script>
+</body>
+</html>

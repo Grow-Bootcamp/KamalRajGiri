@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Array Map Filter And Reduce</title>
+</head>
+<body>
+    <H1>JS Array Map Filter And Reduce</H1>
+    <script>
+console.log("JS Array Map Filter And Reduce");
+// Map, Filter and Reduce are higher order functions that are used to manipulate arrays in JavaScript
+// Map is used to create a new array by applying a function to each element of the original array
+// Map is immutable, meaning it does not change the original array
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map((num) => num * 2);
+console.log(doubled); // [2, 4, 6, 8, 10]
+console.log(numbers); // [1, 2, 3, 4, 5]
+
+// Filter is used to create a new array by filtering out elements of the original array based on a condition
+// Filter is immutable, meaning it does not change the original array
+const evenNumbers = numbers.filter((num) => num % 2 === 0);
+console.log(evenNumbers); // [2, 4]
+console.log(numbers); // [1, 2, 3, 4, 5]
+
+// Reduce is used to reduce an array to a single value by applying a function to each element of the array
+// Reduce is immutable, meaning it does not change the original array
+
+const numberss = [1, 2, 3, 4];
+
+const total = numberss.reduce((sum, number) => {
+    return sum + number;
+}, 0);
+console.log(total); // 10
+console.log(numberss); // [1, 2, 3, 4]
+
+// find() is used to find the first element in an array that satisfies a condition
+// find() is immutable, meaning it does not change the original array
+const found = numberss.find((num) => num > 2);
+console.log(found); // 3
+console.log(numberss); // [1, 2, 3, 4]  
+
+// findIndex() is used to find the index of the first element in an array that satisfies a condition
+// findIndex() is immutable, meaning it does not change the original array
+const foundIndex = numberss.findIndex((num) => num > 2);
+console.log(foundIndex); // 2
+console.log(numberss); // [1, 2, 3, 4]  
+
+// find vs findIndex vs filter
+// find() returns the first element that satisfies the condition
+// findIndex() returns the index of the first element that satisfies the condition
+// filter() returns a new array with all the elements that satisfy the condition
+
+
+//some() is used to check if at least one element in an array satisfies a condition
+// some() is immutable, meaning it does not change the original array
+const hasEvenNumber = numberss.some((num) => num % 2 === 0);
+console.log(" Has even number: "+hasEvenNumber); // true
+console.log(numberss); // [1, 2, 3, 4]  
+
+//evey() is used to check if all elements in an array satisfy a condition
+// every() is immutable, meaning it does not change the original array
+const allEvenNumbers = numberss.every((num) => num % 2 === 0);
+console.log(" All even numbers: "+allEvenNumbers); // false
+
+// indexOf() is used to find first index of value 
+const fruits = ["apple", "banana", "mango"];
+
+console.log(fruits.indexOf("banana"));
+
+//Array.isArray() is used to check wether something is actually an array 
+console.log(Array.isArray([1, 2, 3]));
+console.log(Array.isArray("not an array"));
+
+
+const numb = [1, 2, 3, 4, 5, 6];
+console.log(Array.isArray(numb));
+const result = numb
+    .filter(number => number % 2 === 0)
+    .map(number => number * 2);
+    console.log(result); // [4, 8, 12] // filter even numbers and then double them
+
+    // Array of objects
+    const users = [
+        { id: 1, name: "Alice", age: 25 },
+        { id: 2, name: "Bob", age: 30 },
+        { id: 3, name: "Charlie", age: 35 }
+    ];
+    console.log(Array.isArray(users));
+    console.log(users);
+
+    const names = users.map(user => user.name);
+    console.log(names); // ["Alice", "Bob", "Charlie"] // get names of all users
+
+    const adults = users.filter( (user) => user.age >= 30);
+    console.log(adults); 
+
+    // flat() is used to flatten an array of arrays into a single array
+    const nestedArray = [1, 2, [3, 4], [5, 6]];
+    const flattenedArray = nestedArray.flat();
+    console.log(flattenedArray); // [1, 2, 3, 4, 5, 6]
+
+    </script>
+</body>
+</html>

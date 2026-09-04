@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <script>
+        console.log("JS Object is a collecion of Key-value pair");
+        const user = {
+            name : "Kamal",
+            Program : "BCT",
+            id : 12,
+            isStudent : true,
+            Marks : [90,99,98,96,94],
+            address : {
+                city : "Mnr",
+                Provence : 7
+                // this is also example of nested object
+            },
+            greet : function ()  {
+                console.log("Namastee")
+            }
+        }
+        console.log(user);
+        console.log(user.name);
+        console.log(user["name"]);
+
+        // object are mutuable and cannot be reassigned 
+        user.city = "MNR";
+        user.name  = "Aagyat"
+        console.log(user);
+        
+        delete user.city;
+        console.log(user);
+        
+
+// user.Tmp-city = "DHN" // not allowed 
+// Tmp-city doesn't work as intended because JavaScript interprets - as an operator.
+        user["Tmp-city"]= "DHN";
+        console.log(user)
+
+console.log(user.address.city);
+
+
+
+    </script>
+</body>
+</html>

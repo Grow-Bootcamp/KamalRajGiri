@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Arrays </title>
+</head>
+<body>
+    <H1>JS Arrays</H1>
+    <script>
+console.log("JS Arrays");
+// Arrays are in a ordered collection of data. They can hold any type of data, including other arrays.
+// Arrays are zero indexed, meaning the first element is at index 0, the second at index 1, and so on.
+// Arrays are created using square brackets [] and elements are separated by commas.
+
+const myArray = [1, 2, 3, 4, 5];
+console.log(myArray); // [1, 2, 3, 4, 5]
+// accessing with index
+console.log(myArray[0]); // 1
+console.log(myArray[1]); // 2
+console.log(myArray.length-1) //4
+
+// updating an element in an array
+myArray[0] = 10;
+console.log(myArray); // [10, 2, 3, 4, 5]
+// adding an element to the end of an array
+myArray.push(6);
+console.log(myArray); // [10, 2, 3, 4, 5, 6]
+// removing the last element from an array
+myArray.pop();
+console.log(myArray); // [10, 2, 3, 4, 5]
+// adding an element to the beginning of an array
+myArray.unshift(0);
+console.log(myArray); // [0, 10, 2, 3, 4, 5]
+// removing the first element from an array
+myArray.shift();
+console.log(myArray); // [10, 2, 3, 4, 5]
+
+// slicing an array : immutable , negative value accepted 
+const sliceResult = myArray.slice(2,4);
+console.log(sliceResult); 
+console.log(myArray); // [10, 2, 3, 4, 5]
+
+
+
+
+
+
+
+
+// splicing an array : mutable (adding, removing , replacing is accepted)
+// splice returns the removed elements as an array
+
+
+const number = [10, 20, 30, 40];
+console.log(number.slice(1, 2)) ; // returns [20] , does not change the original array
+console.log(number); // [10, 20, 30, 40]
+
+const numbers = [10, 20, 30, 40];
+const removed = numbers.splice(1, 2);
+console.log(numbers); // [10, 40]
+console.log(removed); // [20, 30] // returns the removed elements as an array
+
+//addong elements using splice
+const numbers2 = [10, 20, 30, 40];
+numbers2.splice(1, 0, 15, 25);
+console.log(numbers2); // [10, 15, 25, 20, 30, 40] // added 15 and 25 at index 1, removed 0 elements
+//replacing elements using splice
+numbers2.splice(1, 1, 100, 200);
+console.log(numbers2); // [10, 100, 200, 25, 20, 30, 40] // replaced 1 element at index 1 with 100 and 200
+
+// forEach method : executes a provided function once for each array element
+const fruits = ['apple', 'banana', 'orange'];
+fruits.forEach((fruit) => {
+    console.log(fruit);
+});
+
+console.log(fruits.forEach((fruit) => {
+    console.log(fruit);
+})); // undefined
+
+
+
+    </script>
+</body>
+</html>

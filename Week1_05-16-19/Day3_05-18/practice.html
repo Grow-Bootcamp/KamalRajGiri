@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Book Collection</title>
+</head>
+<body>
+    <h1>Mini Book Collection</h1>
+    <script>
+        console.log("Starting Mini Book Collection...");
+        const books = [
+            {id : 1, title : "Math" , author : "Hari " , price : 400 , available : true},
+            {id : 2, title : "Science" , author : "Ravi" , price : 500 , available : true},
+            {id : 3, title : "English" , author : "Ramesh" , price : 300 , available : false},
+            {id : 4, title : "History" , author : "Suresh" , price : 600 , available : true},
+            {id : 5, title : "Geography" , author : "Mahesh" , price : 450 , available : false}
+        ]
+
+    console.log("Books : ")
+function displayBooks(){
+    books.forEach(book => {
+        console.log(book.title);
+    });
+}
+displayBooks();
+// Functon Expression 
+console.log("Books Avalablity Status : ")
+const available = function(){
+    books.forEach(book => {
+        console.log(book.title + " : Available : " + book.available);
+    });
+}
+available();
+// Arrow Function 
+console.log("Books price : ")
+const price = () => {
+    books.forEach(book => {
+        console.log(book.title + " : Price : " + book.price);
+    });
+}
+price();
+// Anonymous Function
+function bookreader(callback) {
+    callback("Aagyat");
+}
+bookreader(function (name){
+    console.log("Hello "+ name);
+}
+);
+
+
+// IIFE Function
+(() => {
+    console.log("Book collection")
+})();
+
+// Object
+let math = books[0];
+console.log(math);
+console.log(Object.keys(math));
+console.log(Object.values(math));
+console.log(Object.entries(math));
+console.log(Object.hasOwn(math , "author"));
+let Science = books[1];
+const neew = Object.assign({}, math,Science);
+console.log(neew);
+
+let entries = Object.entries(books[1]);
+console.log(entries);
+let book1= Object.fromEntries(entries);
+console.log(book1);
+
+//Array 
+// Map
+let book_title = books.map(function(book){
+    return book.title;
+})
+console.log(book_title);
+
+//Filter
+let available_book = books.filter((book)=> book.available === true
+)
+console.log(available_book);
+// Find
+let sub = books.find(function(book){
+    return book.id === 1;
+});
+console.log("Book with id 1 is : "+ sub);
+console.log(sub.title);
+
+
+let totalPrice = books.reduce((total , book) => {
+    return total + book.price;
+} , 0 );
+console.log("Total price of books is " + totalPrice);
+
+let expensive_book = books.some(function(book ){
+    return (book.price>500);
+});
+console.log(expensive_book);
+
+// Map + Spread
+let titles = books.map(function(book){
+    return {
+        ...book,
+        title: book.title,
+        price: book.price
+    };
+})
+console.log(titles);
+
+
+// High Order Function
+function showBooks(books, callback){
+    books.forEach(book => {
+    callback(book);        
+    });
+}
+
+showBooks(books, function(book){
+    console.log(book.title);
+});
+
+    </script>
+</body>
+</html>
