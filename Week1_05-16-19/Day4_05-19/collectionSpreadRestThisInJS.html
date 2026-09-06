@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Collection Spread Rest & This Keywords </title>
+</head>
+<body>
+    <H1>Collection Spread Rest & This Keywords</H1>\
+    <script>
+        console.log("Collection Spread Rest & This Keywords");
+        // Collection
+        console.log("Collections");
+        // Array, Set , Map , WeakSet and WeakMap
+        // Array supports itteration but set allows only unique value of any type 
+        // Map : key-value pair 
+
+        // SET
+        const uniqueNumber = new Set([1,2,3,4,5,5]);
+        uniqueNumber.add(4);
+        uniqueNumber.add(6);
+        console.log([...uniqueNumber]); // [1,2,3,4,5] // no repeatation 
+        console.log([uniqueNumber]);
+
+      const set = new Set();
+      console.log(set.add(1)); 
+      console.log(set.add(2));
+      console.log(set.add(3));
+      console.log(set.delete(2));
+      console.log(set);
+      console.log(set.has(3));
+      console.log(set.clear());
+
+
+
+        //Map
+        const userMap = new Map();
+        userMap.set('name','Alice');
+        userMap.set('age',23);
+        console.log(userMap.get('name'));
+        console.log(userMap);
+
+        // set (key, value), get(key), has(key), delete(key), clear(), size, keys(), values(), entries()
+        console.log(userMap.size);
+        console.log(userMap.keys());
+        console.log(userMap.values());
+        console.log(userMap.entries());
+    
+
+        // debugger;  // js built-in debugging statement // when devtool is open , execution can pause at that point 
+        console.log("----------------");
+        console.log("Spread & Rest Operators")
+        console.log("----------------");
+         const  numbers = [1,2,3,4,5];
+         const newNumbers = [...numbers,6,7,8];
+         console.log(newNumbers);
+
+         // Rest Operator
+
+        function sum(...args){
+            let total = 0;
+            for(let i=0; i<args.length; i++){
+                total += args[i];
+            }
+            return total;
+        }
+        console.log(sum(1,2,3,4,5));
+
+
+        // Object Destructuring
+        const person = {
+            name: 'Alice',
+            age: 23,
+            city: 'New York'
+        };
+        const {name, age, city} = person;
+        console.log(name); // Alice
+        console.log(age); // 23
+        console.log(city); // New York
+
+        //Array Destructuring
+        const numbersArray = [1,2,3,4,5];
+        const [firstNum, secondNum, ...restNums] = numbersArray;
+        console.log(firstNum); // 1
+        console.log(secondNum); // 2
+        console.log(restNums); // [3,4,5]
+
+        console.log("----------------");
+        console.log("this Keyword")
+        console.log("----------------");
+        // The this keyword refers to the object it belongs to.
+        // this refers to a value determined by the context in which it is executed.
+        //the value of this is determined by how a function is called (runtime binding). It can't be set by assignment during execution, and it may be different each time the function is called.
+
+        // this in an object method
+        const user = {
+name: "Kamal",
+greet() {
+console.log(this.name);
+}
+};
+user.greet();
+
+// this in arrow function
+//arrow functions do not have their own this value. Instead, they inherit this from the surrounding lexical context.
+const userArrow = {
+name: "Kamal",
+greet: () => {  
+    console.log(this.name); // this refers to the global object (window in browsers)
+}
+};
+userArrow.greet(); // undefined
+
+console.log("----------------");
+console.log("call, apply and bind methods");
+console.log("----------------");
+
+//call : invokes the function with a specific this value and arguments provided individually
+function greet(){
+    console.log(this.name);
+}
+const user1 = {
+    name : "Kamal"
+} ;
+greet.call(user1); // Kamal
+
+// apply // similar to call but takes an array of arguments
+
+function add(a,b){
+    return a + b;
+}
+console.log(add.apply(null,[2,3])); // 5
+
+
+// bind // creates a new function that, when called, has its this keyword set to the provided value
+const user2 =  greet.bind(user1);
+user2(); // Kamal
+
+
+
+
+
+        // console.log("----------------");
+
+
+
+
+
+    </script>
+</body>
+</html>

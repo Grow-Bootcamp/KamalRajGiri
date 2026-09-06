@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Handling </title>
+</head>
+<body>
+<h1>
+    Error Handling
+</h1>
+<script>
+    console.log("Error Handling");
+    // Error  is a problem that occurs when a program is running.
+    // Syntax Error : when js doesnot follow the rules of the language.
+    const name = "Kamal";
+    console.log(name);
+    // console.log(name; // SyntaxError: missing ) after argument list
+    // SynataxError need to be fixed before the program can run.
+
+// Reference Error : when js cannot find a variable that is being referenced.
+    // console.log(nam); // ReferenceError: nam is not defined
+
+
+// Type Error : when a value is not of the expected type.
+    const num = 5;
+    // console.log(num.toUpperCase()); // TypeError: num.toUpperCase is not a function
+
+// Range Error : when a value is not within the expected range.
+    // const arr = new Array(-1); // RangeError: Invalid array length // RangeError: Invalid array length
+
+
+
+    // Error Object : when an error occurs, an Error object is created. The Error object has a name and a message property that describe the error.
+    // built in js objects
+
+    const err = new Error("This is an error message");
+    console.log(err.name); // Error
+    console.log(err.message); // This is an error message
+    console.log(err.stack); // Error: This is an error message at <anonymous>:1:13
+        // error.stack is a string that contains the name of the error, the message, and the stack trace. The stack trace is a list of the function calls that led to the error. It can be useful for debugging.
+
+
+    
+    // Throwing Errors : you can throw your own errors using the throw statement. The throw statement can be used to throw any type of value, but it is common to throw an Error object.
+   function checkAge(age) {
+        if (age < 18) {
+            throw new Error("You must be at least 18 years old.");
+        }
+        return "Allowed";
+    }
+
+    // try-catch Statement : you can use the try-catch statement to handle errors. The try block contains the code that may throw an error, and the catch block contains the code that will run if an error is thrown else the program will continue to run.
+        try {
+            checkAge(13);
+        } catch (error) {
+            console.log(error.name); // Error
+            console.log(error.message); // You must be at least 18 years old.
+        }
+
+
+// finally statement : executes whether or not an error is thrown. It is often used to clean up resources, such as closing a file or releasing a lock.
+        try {
+            checkAge(13);
+        } catch (error) {
+            console.log(error.name); // Error
+            console.log(error.message); // You must be at least 18 years old.
+        } finally {
+            console.log("This will always run.");
+        }
+        //finally block is optional, but it is a good practice to include it to ensure that resources are cleaned up properly. it is kept at the end of the try-catch block to ensure that it runs regardless of whether an error is thrown or not. 
+
+
+        // throw statement : js allows us to creat our own errors using the throw statement. The throw statement can be used to throw any type of value, but it is common to throw an Error object. The throw statement can be used to create custom error messages that are more specific to the application.
+
+
+
+        // Debugging : knowing err is not enough , a developer must know how to find and fix them 
+        // console Methods : console.log(), console.error(), console.warn(), console.info(), console.assert() , console.table() , console.group() , console.groupEnd() , console.time() , console.timeEnd() , console.trace() , console.clear()
+
+        console.log("-----------------------");
+        console.log("Console Methods : ");
+        console.log("-----------------------");
+
+        console.log("This is a log message.");
+        console.error("This is an error message.");
+        console.warn("This is a warning message.");
+        console.info("This is an info message.");
+        console.assert(true, "This is a custom assertion error.");
+        console.table([{name: "John", age: 30}, {name: "Jane", age: 25}]);
+        // console.clear();// clears the console
+        // console.trace();// shows the call stack
+        console.info("This is an info message.");
+        console.group("Group 1"); // creates a new inline group in the console
+        console.log("This is a log message in Group 1.");
+        console.log("This is a log message in Group 1.1.");
+        console.groupEnd(); // ends the current inline group in the console
+        console.group("Group 2"); // creates a new inline group in the console
+        console.log("This is a log message in Group 2.");
+        console.groupEnd();
+        console.time("Timer 1"); // starts a timer with the label "Timer 1"
+        for (let i = 0; i < 1000000; i++) {
+            
+            // do nothing
+        }
+        console.timeEnd("Timer 1"); // ends the timer with the label "Timer 1" and logs the time taken to execute the code between console.time() and console.timeEnd()
+
+
+
+        // Handling different Error types 
+        // errors can be handled using the try-catch statement. The try block contains the code that may throw an error, and the catch block contains the code that will run if an error is thrown. The catch block can also be used to handle different types of errors by checking the name property of the error object.
+
+        try{
+            const user = null;
+            console.log(user.name); // TypeError: Cannot read property 'name' of null
+        } catch (error ){
+            if (error instanceof TypeError) {
+                console.log("TypeError: " + error.message);
+            } else if (error instanceof ReferenceError) {
+                console.log("ReferenceError: " + error.message);
+            } else if (error instanceof SyntaxError) {
+                console.log("SyntaxError: " + error.message);
+            } else if (error instanceof RangeError) {
+                console.log("RangeError: " + error.message);
+            } else {
+                console.log("Unknown Error: " + error.message);
+            }
+        }
+        
+
+        // custom Error Handling :  A function validates input and throw an apppropriate error 
+
+        function div(a,b){
+            if (b === 0) {
+                throw new Error("Division by zero is not allowed.");
+            }
+            return a / b;
+        }
+        try {
+            console.log(div(10, 0)); // Error: Division by zero is not allowed.
+        } catch (error) {
+            console.log("Error: " + error.message);
+        }
+
+        // do not use try-catch to hide every programming mistake . use it when you can meaningfully handle the error and recover from it.
+
+        // Debugging JS 
+
+        console.log("------------------");
+        console.log("Debugging JS")
+        console.log("------------------");
+
+        // debuging is the process of finding and fixing problems in programme .
+        
+
+</script>
+</body>
+</html>

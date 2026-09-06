@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heap Memory Closure Cookies & Sessions in JS</title>
+</head>
+<body>
+    <h1>Heap Memory Closure Cookies & Sessions in JS
+    </h1>
+
+    <script>
+        console.log("Heap Memory Closure Cookies & Sessions in JS");
+        // Heap Memory : memory allocated to the program for execution 
+        // Closure : function with preserved data 
+        // Cookies : small piece of data stored in browser 
+        // Session : temporary data stored in server
+
+        console.log("---------------")
+        console.log("Heap Memory ")
+        console.log("---------------")
+        // Heap Memory : dynamically allocated objects & other data structures
+
+        const user ={
+            name: "Kamal",
+            age: 23
+        }
+        const numbers = [1,2,3,4,5];
+        console.table(user);
+        console.log(numbers);
+
+
+        // Premitive VS Reference Values
+        const primitiveValue = "Hello";
+        const referenceValue = { name: "Alice" };
+        console.log(primitiveValue);
+        console.log(referenceValue);
+        // When we assign a primitive value to another variable, a copy of the value is created 
+        const anotherPrimitiveValue = primitiveValue;
+        console.log(anotherPrimitiveValue);
+
+        
+        console.log("---------------");
+        console.log("Closure");
+        console.log("---------------");
+        // A closure is a function that has access to variables in its outer scope, even after the outer function has returned.
+        function createCounter() {
+            let count = 0;
+            return function() {
+                count++;
+                return count;
+            };
+        }
+const counter = createCounter();
+console.log(counter()); // 1
+console.log(counter()); // 2
+console.log(counter()); // 3
+
+console.log("---------------");
+console.log("Cookies");
+console.log("---------------");
+// Cookies are small pieces of data associated with a website that browsers can store and send with HTTP requests according to cookie rules.
+
+
+
+//Expires :  The date and time when the cookie will expire
+//Max-Age :  The maximum age of the cookie in seconds
+//Path :  The path for which the cookie is valid
+//Secure :  If true, the cookie will only be sent over HTTPS
+//SameSite :  The SameSite attribute of the cookie
+//HttpOnly :  If true, the cookie will not be accessible via JavaScript
+document.cookies = "username=John Doe; expires=Thu, 18 Dec 2023 12:00:00 UTC; path=/; secure; samesite=strict; httponly";
+
+console.log(document.cookies);
+
+console.log("---------------");
+console.log("Sessions");
+console.log("---------------");
+
+// Sessions are temporary data stored on the server that is associated with a specific user session. Sessions are typically used to store user-specific information, such as login status or shopping cart contents, and are often implemented using session IDs stored in cookies.
+
+        // console.log("---------------")
+        // console.log("---------------")
+        // console.log("---------------")
+        // console.log("---------------")
+        // console.log("---------------")
+        // console.log("---------------")
+
+
+
+
+    </script>
+</body>
+</html>
