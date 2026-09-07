@@ -6,4 +6,3 @@ console.log("Todo App Initiated...");
     document.getElementById('time').textContent = date.toLocaleString();
     setTimeout(update,1000);
 })();
-
