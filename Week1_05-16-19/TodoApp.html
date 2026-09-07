@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App</title>
+    <link rel="stylesheet" href="./TodoApp.css">
+    <script src="./TodoApp.js" defer></script>
+</head>
+<body>
+    <header class="header">
+        <h1><img class="logo" src="./logo.png" alt="logo"> <span>Todo App</span></h1>
+        <nav class="navbar">
+            <div class="top"><div>My Todo</div>
+            <div>Today :<time id="time" datetime=""></time> </div></div>
+            <div class="nav-header-div">Description : Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam doloribus eveniet ad tenetur dolor, dolorem aliquam voluptate soluta cumque consequuntur ipsam placeat error blanditiis culpa delectus dignissimos reiciendis! Placeat, quae!.
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section class="input">
+        <div class="task-input"><label for="input">Text:</label>
+        <input type="text" name="input" id="input"></div>
+        <div class="task-category">
+            <label for="category">Category:</label>
+        <select name="category" id="category">
+            <option value="work">Work</option>
+            <option value="personal">Personal</option>
+            <option value="shopping">Shopping</option>
+        </select>
+        </div>
+        <button class="task-button">Add + </button>
+        </section>
+
+
+        <section class="list">
+            <div class="filter">
+                <button class="filter-all" >All</button >
+                <button class="filter-active">Active</button >
+                <button class="filter-completed">Completed</button >
+            </div>
+            <ul>
+                <li class="task-item">
+             <div class="task-info-head">
+                       <input type="checkbox" name="task1" id="task-title" class="task-checkbox">
+                    <div class="task-info">
+                       <label for="task-title" class="task-title">Task 1</label>
+                       <span class="task-category-">Work</span>
+                    </div>
+             </div>
+                    <button class="task-delete">Delete</button>
+                </li>
+
+            </ul>
+        </section>
+
+    </main>
+    <section class="summary">
+         <header>Footer Summary</header>
+        <div> 2 tasks Remaining . 1 Completed</div>
+    </section>
+    <footer class="footer">
+        <p>Stay organized. Stay productive.</p>
+        <p>&copy; 2023 Todo App. All rights reserved.</p>
+    </footer>
+</body>
+</html>
