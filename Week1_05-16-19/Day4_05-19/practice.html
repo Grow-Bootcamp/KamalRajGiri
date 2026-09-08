@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Expense Tracker</title>
+  </head>
+  <body>
+    <h1>Personal Expense Tracker</h1>
+    <script>
+      console.log("Personal Expense Tracker initialized.");
+      console.log("----------------------------------------");
+      console.log("----------------------------------------");
+      console.log(`             PERSONAL EXPENSE TRACKER
+                       │
+        ┌──────────────┼──────────────┐
+        ↓              ↓              ↓
+     Add Expense     View Expenses   Summary
+        │              │              │
+        ↓              ↓              ↓
+    Validation       Map/Filter      Reduce
+        │
+        ↓
+   Error Handling
+        │
+        ↓
+    localStorage`);
+      console.log("----------------------------------------");
+      console.log("----------------------------------------");
+
+      const expenses = [
+        {
+          id: 1,
+          title: "Groceries",
+          amount: 150,
+          category: "Food",
+          date: "2023-05-01",
+        },
+        {
+          id: 2,
+          title: "Laptop",
+          amount: 50000,
+          category: "Electronics",
+          date: "2023-05-01",
+        },
+        {
+          id: 3,
+          title: "Movie",
+          amount: 500,
+          category: "Entertainment",
+          date: "2023-05-01",
+        },
+        {
+          id: 4,
+          title: "Book",
+          amount: 200,
+          category: "Education",
+          date: "2023-05-01",
+        },
+        {
+          id: 5,
+          title: "Coffee",
+          amount: 50,
+          category: "Food",
+          date: "2023-05-01",
+        },
+      ];
+
+      function createCounter() {
+        let count = 0;
+        return function () {
+          count++;
+          return count;
+        };
+      }
+      const generatedId = createCounter();
+
+      function addExpenses(title, amount, category, date) {
+        const newExpense = {
+          id: generatedId(),
+          title: title,
+          amount: amount,
+          category: category,
+          date: date,
+        };
+        try {
+          if (
+            newExpense.title === undefined ||
+            newExpense.title === null ||
+            newExpense.title.trim() === ""
+          ) {
+            throw new Error(`Missing title `);
+          }
+          if (newExpense.amount === undefined || newExpense.amount === null) {
+            throw new Error(`Missing amount `);
+          }
+          if (isNaN(newExpense.amount) || newExpense.amount <= 0) {
+            throw new Error(`Invalid amount `);
+          }
+          if (
+            newExpense.category === undefined ||
+            newExpense.category === null ||
+            newExpense.category.trim() === ""
+          ) {
+            throw new Error(`Missing category `);
+          }
+          if (
+            newExpense.date === undefined ||
+            newExpense.date === null ||
+            newExpense.date.trim() === ""
+          ) {
+            throw new Error(`Missing date `);
+          }
+          expenses.push(newExpense);
+          console.log(
+            `Added Expense: ${title}, Amount: ${amount}, Category: ${category}, Date: ${date}`,
+          );
+        } catch (error) {
+          console.error(`Error adding expense: ${error.message}`);
+          console.error(`Stack trace: ${error.stack}`);
+        }
+      }
+
+      addExpenses("Gym", 1000, "Health", "2023-05-01");
+      addExpenses(" ", 500, "Entertainment", "2023-05-01");
+      addExpenses("Dinner", -200, "Food", "2023-05-01");
+      addExpenses("Concert", 2000, "Entertainment", "2023-05-01");
+      console.log("Current Expenses: ");
+      console.table(expenses);
+      console.log("----------------------------------------");
+
+      // 1. ReferenceError
+      try {
+        console.log(unknownVariable);
+      } catch (error) {
+        console.error("ReferenceError:", error.message);
+      }
+
+      // 2. TypeError
+      try {
+        const value = 100;
+        value();
+      } catch (error) {
+        console.error("TypeError:", error.message);
+      }
+
+      // 3. RangeError
+      try {
+        const number = 1;
+        number.toFixed(200);
+      } catch (error) {
+        console.error("RangeError:", error.message);
+      }
+      const expences = expenses;
+      expences.forEach((expense) => {
+        expense.getInfo = getInfo;
+      });
+      function getInfo(expenses) {
+        let title = this.title;
+        let amount = this.amount;
+        let category = this.category;
+        let date = this.date;
+        return { title, amount, category, date };
+      }
+      // console.log(getInfo());
+      console.log(expenses[0].getInfo());
+      console.log(expenses[2].getInfo());
+      console.log(expenses[3].getInfo());
+
+      function displayExpenses(expenses) {
+        console.log("Displaying Expenses:");
+        expenses.forEach((expense) => {
+          const info = expense.getInfo();
+          console.log(info);
+        });
+        console.table(expenses);
+      }
+
+      displayExpenses(expenses);
+
+      const titles = expenses.map((expense) => expense.title);
+      console.log("Titles of Expenses:", titles);
+      const foodExpenses = expenses.filter(
+        (expense) => expense.category === "Food",
+      );
+      console.log("Food Expenses:", foodExpenses);
+      const totalAmount = expenses.reduce(
+        (total, expense) => total + expense.amount,
+        0,
+      );
+      console.log("Total Amount of Expenses:", totalAmount);
+
+      const expensiveExpenses = expenses.filter(
+        (expense) => expense.amount > 500,
+      );
+      console.log("Expensive Expenses:", expensiveExpenses);
+      const uniqueCategories = [
+        ...new Set(expenses.map((expense) => expense.category)),
+      ];
+      console.log("Unique Categories:", uniqueCategories);
+
+      const summary = uniqueCategories.map((category) => {
+        const categoryExpenses = expenses.filter(
+          (expense) => expense.category === category,
+        );
+        const totalCategoryAmount = categoryExpenses.reduce(
+          (total, expense) => total + expense.amount,
+          0,
+        );
+        return { category, totalCategoryAmount };
+      });
+
+      console.log("Summary:", summary);
+
+//   map.set(title, {amount, category, date});           
+
+const categorySummary = new Map();
+
+expenses.forEach((expense) => {
+    const category = expense.category;
+    const amount = expense.amount;
+
+    if (categorySummary.has(category)) {
+        categorySummary.set(
+            category,
+            categorySummary.get(category) + amount
+        );
+    } else {
+        categorySummary.set(category, amount);
+    }
+});
+console.log("Category Summary:", categorySummary);
+const updatedExoenses = expenses.map((expense) => {
+    return {
+        ...expense,
+        amount: expense.amount * 1.1 // Increase amount by 10%
+    };
+});
+console.table(updatedExoenses);
+
+
+
+function calculateTotal(...amounts) {
+    const total = amounts.reduce((total, amount) => total + amount, 0);
+    return total;
+}
+
+console.log("Total:", calculateTotal(100, 200, 300));
+console.log("Total:", calculateTotal(100, 200, 300, 400, 500));
+
+
+
+const expenseA = expenses[0];
+const expenseB = expenseA;
+console.log("Before modification:", expenseA, expenseB);
+expenseB.amount = 999;
+console.log("After modification:", expenseA, expenseB);
+console.log(expenseA === expenseB);
+
+
+
+localStorage.setItem("expenses", JSON.stringify(expenses));
+
+console.log("Expenses saved to localStorage.");
+
+
+const storedExpenses = localStorage.getItem("expenses");
+
+const loadedExpenses = JSON.parse(storedExpenses);
+
+console.log("Expenses loaded from localStorage:");
+console.table(loadedExpenses);
+
+
+// Save current session information
+sessionStorage.setItem("lastViewedCategory", "Food");
+console.log("Session data saved.");
+
+// Get session information
+const lastCategory = sessionStorage.getItem("lastViewedCategory");
+console.log("Last Viewed Category:", lastCategory);
+
+// Save cookie
+document.cookie = "currency=Rs; max-age=86400";
+console.log("Cookie saved.");
+// Read cookies
+console.log("Cookies:", document.cookie);
+
+</script>
+</body>
+</html>
