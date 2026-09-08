@@ -79,6 +79,7 @@ main{
     margin-top: 10px;
     color: var(--text-light);
     align-self: center;
+    text-align: center;
 }
 /* Input Form Section */
 .input{
@@ -191,7 +192,7 @@ width: 100%;
 /* Task Info */
 .task-info-head{
     display: flex;
-    flex-wrap: nowrap;
+    /* flex-wrap: nowrap; */
     justify-content: space-between;
     align-items: center;
     gap: 10px;
