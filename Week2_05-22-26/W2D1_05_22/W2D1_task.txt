@@ -1,0 +1,47 @@
+Day 1: ES6+, OOP, DOM & REST API Design
+Description
+Deepen JavaScript knowledge with ES6 features, asynchronous programming basics, prototypes/OOP, DOM
+manipulation, and the fundamentals of designing RESTful APIs.
+Scope
+● Study ES6 features, callbacks & promises, and built-in objects.
+● Study Prototypes and Object-Oriented Programming (OOP) concepts in JS.
+● Study DOM Manipulation using JavaScript and JS Modules (import/export).
+● Study RESTful API design principles and URL design conventions.
+● Study error handling patterns and HTTP status codes in API design.
+● Document the day's key learnings, findings, and code snippets in a dedicated learning-log file
+(Markdown/Doc) and commit it to the repository.
+● Raise a GitHub Pull Request for the day's practice code/work and send it to your mentor for review.
+Acceptance Criteria
+● Can explain prototype-based inheritance and implement a basic OOP structure using prototypes.
+● Can manipulate DOM elements (create, update, remove) using vanilla JS.
+● Can design a RESTful URL structure for a sample resource (e.g., users, products) following REST
+conventions.
+● Can map common error scenarios to the correct HTTP status codes.
+● A daily learning-log file capturing the day's topics and key takeaways is created/updated and
+committed to the repository.
+● A GitHub PR is raised for the day's work and sent to the mentor for review.
+● The learning-log file link and the PR link are both posted in the Zoho task's comment section and in
+the corresponding Microsoft Teams comment/thread.Day 1: ES6+, OOP, DOM & REST API Design
+Description
+Deepen JavaScript knowledge with ES6 features, asynchronous programming basics, prototypes/OOP, DOM
+manipulation, and the fundamentals of designing RESTful APIs.
+Scope
+● Study ES6 features, callbacks & promises, and built-in objects.
+● Study Prototypes and Object-Oriented Programming (OOP) concepts in JS.
+● Study DOM Manipulation using JavaScript and JS Modules (import/export).
+● Study RESTful API design principles and URL design conventions.
+● Study error handling patterns and HTTP status codes in API design.
+● Document the day's key learnings, findings, and code snippets in a dedicated learning-log file
+(Markdown/Doc) and commit it to the repository.
+● Raise a GitHub Pull Request for the day's practice code/work and send it to your mentor for review.
+Acceptance Criteria
+● Can explain prototype-based inheritance and implement a basic OOP structure using prototypes.
+● Can manipulate DOM elements (create, update, remove) using vanilla JS.
+● Can design a RESTful URL structure for a sample resource (e.g., users, products) following REST
+conventions.
+● Can map common error scenarios to the correct HTTP status codes.
+● A daily learning-log file capturing the day's topics and key takeaways is created/updated and
+committed to the repository.
+● A GitHub PR is raised for the day's work and sent to the mentor for review.
+● The learning-log file link and the PR link are both posted in the Zoho task's comment section and in
+the corresponding Microsoft Teams comment/thread.

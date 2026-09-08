@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Manipulation and Events </title>
+</head>
+<body>
+<!-- <h1>DOM Manipulation and Events</h1> -->
+<h1 id="title">Expense Tracker</h1>
+
+<input id="expenseInput" type="text">
+
+<form id="expenseForm">
+
+    <input id="title" type="text">
+
+    <button type="submit">
+        Add Expense
+    </button>
+
+
+    <div id="parent">
+    <button id="child">Click</button>
+</div>
+
+</form>
+
+
+
+<div id="parent">
+    parent container
+    <br><br>
+    <button id="child">Delete</button>
+</div>
+<script>
+console.log("DOM manuplation and events:")
+// Selecting 
+const title = document.getElementById("title");
+// Reading
+console.log(title.textContent); 
+// Manipulating
+title.textContent = "My Expense Tracker";
+console.log(title.textContent);
+title.style.color = "blue";
+
+//creating new element
+const newElement = document.createElement("p");
+// Setting the text content of the new element
+newElement.textContent = "This is a new paragraph.";
+// Appending the new element to the body of the document
+document.body.appendChild(newElement);
+// Removing an element
+const elementToRemove = document.querySelector("p");
+elementToRemove.remove();
+
+const btn = document.createElement("button");
+btn.textContent = "Click Me";
+document.body.appendChild(btn);
+
+function addExpense() {
+    console.log("Adding expense");
+}
+// Adding an event listener to the button
+btn.addEventListener("click", addExpense);
+// Adding an event listener to the button
+btn.addEventListener("click", () => {
+    console.log("Button clicked!");
+});
+
+btn.addEventListener("click", addExpense);
+
+btn.addEventListener("click", event => {
+    console.log(event); // Logs the event object when the button is clicked.
+    console.log(event.target); // Logs the target element of the event (the button that was clicked).
+    console.log(event.type); // Logs the type of event (in this case, "click").
+});
+
+const input = document.querySelector("#expenseInput");
+
+input.addEventListener("input", event => { // Listen for the "input" event on the input field
+    console.log(event.target.value); // Logs the current value of the input field as the user types.
+});
+
+input.addEventListener("input", () => {
+    console.log("Input changed");
+});
+input.addEventListener("change", () => {
+    console.log("Input changed and focus lost");
+});
+
+
+// form submmit event
+
+const form = document.querySelector("#expenseForm");
+
+form.addEventListener("submit", event => {
+    event.preventDefault(); // Prevent the default form submission behavior
+    if (form.querySelector("#title").value.trim() === "") { // Check if the input field is empty
+        alert("Please enter a title for the expense."); // Show an alert if the input is empty
+    return;
+}
+    console.log("Form submitted");
+})
+
+const parent = document.querySelector("#parent");
+const child = document.querySelector("#child");
+
+
+
+</script>
+</body>
+</html>

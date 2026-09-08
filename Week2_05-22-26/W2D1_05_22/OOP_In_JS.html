@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OOP in JS</title>
+</head>
+<body>
+    <h1>OOP IN JS</h1>
+    <script>
+        console.log("OOP IN JS");
+
+        // class : A Blueprint for creating objects
+        class Student{
+            constructor(name,age){ //special method of class 
+                this.name = name;
+                this.age = age;
+            }
+            introduce(){
+                console.log(`My name is ${this.name} and i am ${this.age } years old.`);
+            }
+        }
+
+        const student1 = new Student("kamal", 23);
+        const student2 = new Student("Aagyat", 22);
+        console.table(student1);
+        console.log(student2.name);
+        student1.introduce();
+
+
+        // Encapsulation : keeping related data and behaviour together & controlling how the internal data is accessed or modified.
+        
+        class BankAccount {
+            #balance; // Modern JS supports private class fields using #
+
+    constructor(owner, balance) {
+        this.owner = owner;
+        this.#balance = balance;
+    }
+
+    deposit(amount) {
+        this.#balance += amount;
+    }
+    withdraw(amount){
+        this.#balance -= amount;
+    }
+
+    getBalance() {
+        return this.#balance;
+    }
+
+}
+const account = new BankAccount("Kamal", 1000);
+
+account.deposit(500);
+account.withdraw(200);
+
+console.log(`Dear ${account.owner} , your current balance is  ${account.getBalance()}`);
+// console.log(account.#balance); // not allowed
+
+//Inheritance : Allows one class to reuse functionality from another class
+
+class person {
+    constructor(name){
+        this.name = name;
+    }
+    greet(){
+        console.log(`Hello, I am ${this.name}`);
+    }
+}
+
+
+class stdent extends person {
+    constructor (name , course){
+        super(name);
+        this.course = course;
+    }
+    study(){
+        console.log(`${this.name} is studying ${this.course}.`);
+    }
+}
+const stdent1 = new stdent(
+    "Kamal",
+    "Computer Engineering"
+);
+stdent1.greet();
+stdent1.study();
+
+// child class can access the properties and methods of parent class using super keyword.
+// child class can also override the methods of parent class by defining a method with the same name in child class.
+
+// Polymorphism : The ability of an object to take on many forms. In OOP, polymorphism allows objects of different classes to be treated as objects of a common superclass.
+
+class Animal {
+    makeSound() {
+        console.log("Animal makes a sound");
+    }
+}
+class Dog extends Animal {
+    makeSound() {
+        console.log("Dog makes a sound");
+    }
+}
+
+class Cat extends Animal {
+    makeSound() {
+        console.log("Cat makes a sound");
+    }
+}
+
+const animals = [
+    new Dog(),
+    new Cat()
+];
+
+animals.forEach(animal => {
+    animal.makeSound();
+});
+
+
+// Abstraction : Hiding the complex implementation details and showing only the essential features of an object.
+
+
+class Payment {
+
+    processPayment(amount) {
+        this.validate(amount);
+        this.connectToBank();
+        this.completeTransaction(amount);
+    }
+
+    validate(amount) {
+        console.log("Your payable balance is ", amount);
+    }
+
+    connectToBank() {
+        console.log("Connecting to the bank...");
+    }
+
+    completeTransaction(amount) {
+        console.log(`Transaction of ${amount} completed successfully.`);
+    }
+
+}
+const payment = new Payment();
+payment.processPayment(1000);
+
+
+
+    </script>
+</body>
+</html>
