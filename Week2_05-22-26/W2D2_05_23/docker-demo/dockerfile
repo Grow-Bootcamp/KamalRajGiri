@@ -1,0 +1,25 @@
+FROM node:22 
+#Base image for Node.js version 22
+WORKDIR /app
+#Set the working directory inside the container to /app
+COPY package*.json ./
+#Copy the package.json and package-lock.json files to the working directory
+RUN npm install
+#Install the dependencies specified in package.json
+COPY . .
+#Copy the rest of the application code to the working directory
+EXPOSE 3000
+#Expose port 3000 for the application to listen on
+CMD ["npm", "start"]
+#Command to run the application when the container starts
+
+
+# for frontend 
+# FROM nginx:alpine
+#Set the base image to Nginx on Alpine Linux
+
+# COPY . /usr/share/nginx/html
+#Copy the application code to the Nginx HTML directory
+
+# EXPOSE 80
+#Expose port 80 for the Nginx server to listen on

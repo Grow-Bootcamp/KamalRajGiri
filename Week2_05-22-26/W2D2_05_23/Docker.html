@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker</title>
+</head>
+<body>
+    <h1>Docker</h1>
+    <p>Docker is a platform for developing, shipping, and running applications. It enables developers to package their applications and dependencies into lightweight, portable containers. </p>
+    <p>Containers are isolated environments that can run on any system with Docker installed, ensuring consistency across different development and production environments.</p>
+
+    <h3>Container != Virtual Machine</h3>
+    <p>While both containers and virtual machines are used to isolate applications, they differ in their approach and resource utilization. Containers share the host OS kernel, making them more lightweight and efficient, while virtual machines run a full operating system, resulting in higher resource consumption.</p>
+    <h3>The Docker Mental Model</h3>
+    <p>Dockerfile => Image => Container => Running Application</p>
+    <p>Dockerfile: A text file that contains instructions to build a Docker image.</p>
+    <p>Image: A read-only template that contains the instructions to create a container.</p>
+    <p>Container: A running instance of an image.</p>
+    <p>Running Application: The actual application running inside a container.</p>
+    <p>Volume: A persistent storage mechanism for containers. 
+        container deleted => volume still exists => data is not lost.
+    </p>
+    <p>Network: A way for containers to communicate with each other and the outside world.
+    <p>Port: A way to expose a container's internal port to the host system.</p>
+    <p>Port Mapping: The process of mapping a container's internal port to a port on the host system.</p>
+    <p>.dockerignore : A file that specifies which files and directories to exclude when building a Docker image.</p>
+
+    </p>
+    <h3>Note:</h3>
+    <p>Putting everything in one giant container is generally not recommended. It's better to keep each service in its own container for better maintainability and scalability. each container should have a single, clear responsibility.</p>
+    <p>This idea os closely related to the concept of microservices, although Docker is veryuseful for ordinary monolithic applications.</p>
+    <p>Docker is not about putting everything in one place. instead , its closer to creating a predictiable, isolated environment for particular application or service.</p>
+    <h3>The Biggest Benifits</h3>
+    <p> Consistency across different environments.
+        <br>
+        Isolation of applications and dependencies.
+        <br>
+        Portability across different systems.
+        <br>
+        Faster deployment and scaling.
+        <br>
+        Simplified application management and versioning.
+    </p>
+
+    <h3>Useful Commands</h3>
+    <ul>
+        <li> docker ps : List running containers</li>
+        <li>docker stop <container> : Stop a running container</li>
+        <li>docker rm <container> : Remove a stopped container</li>
+        <li>docker images : List available images</li>
+        <li>docker rmi <image> : Remove an image</li>
+        <li>docker build -t <image_name> . : Build an image from a Dockerfile</li>
+        <li>docker run -p <host_port>:<container_port> <image_name> : Run a container from an image and map ports</li>
+        <li>docker logs <container> : View the logs of a container</li>
+    </ul>
+
+    <h2>Docker Compose</h2>
+    <p>allows you to define and run multi-container Docker applications.</p>
+
+</body>
+</html>

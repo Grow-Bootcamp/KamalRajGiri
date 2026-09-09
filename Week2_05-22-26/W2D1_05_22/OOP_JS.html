@@ -9,16 +9,16 @@
     
     <script>
         class Hello{
-            #Hello ;
+            // #Hello ;
             constructor (firstName = "Kamal", lastName){
                 this.firstName = firstName;
                 this.lastName = lastName;
-                this.#Hello = `Hello ${this.firstName} ${this.lastName}`;
             }
             helloWorld(){
                 console.log(`${this.firstName} ${this.lastName} `); 
+                // return this.#Hello;
             }
-            byeWorld(payoneer){
+            byeWorld(payoneer = "maybe"){
                 console.log(`${payoneer} is good`);
             }
         }
@@ -32,15 +32,19 @@
 
 
         let arr = [1,2,3,4,5];
-        let [,,,batr ] = arr;
-        console.log(batr);
+        let [,,, vari] = arr;
+        console.log(`${vari}`);
+        let varie = arr[2];
+        console.log(varie);
 
 
-        class Hello{
-            // staic hell()(){
-
-            // }
+        class Hi{
+            static hell(){
+                return "Hello, World!";
+            }
         }
+        const maybe = Hi.hell();
+        console.log(maybe);
 
     </script>
 </body>
