@@ -1,18 +1,181 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REST API Fundamentals </title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>REST API Fundamentals</title>
 </head>
+
 <body>
-    <h1>REST API Fundamentals</h1>
-    <p>REST (Representational State Transfer) is an architectural style for designing networked applications. APIs(Applications Programming Interfaces) built with REST principles are stateless and use standard HTTP methods to interact with resources.</p>
-    <p>In web development, REST APIs are widely used to enable communication between different appliccations or parts of a single application.</p>
-    <p>REST APIs are typically used to provide a way for clients to access and manipulate resources on a server.</p>
+  <h1>REST API Fundamentals</h1>
+  <p>
+    REST (Representational State Transfer) is an architectural style for
+    designing networked applications. APIs(Applications Programming
+    Interfaces) built with REST principles are stateless and use standard HTTP
+    methods to interact with resources.
+  </p>
+  <p>
+    In web development, REST APIs are widely used to enable communication
+    between different appliccations or parts of a single application.
+  </p>
+  <p>
+    REST APIs are typically used to provide a way for clients to access and
+    manipulate resources on a server.
+  </p>
+  <p>
+    HTTP (Hypertext Transfer Protocol) is the foundation of data communication
+    on the web and is used by REST APIs to send requests and receive
+    responses.
+  </p>
 
-    <script>
+  <script>
+    console.log("REST API Fundamentals");
+    // REST API Fundamentals
+    // HTTP Requests : GET, POST, PUT, DELETE
 
-    </script>
+    // GET request: Retrieve data from a server
+    // Example: Fetching a list of users from an API endpoint
+    // const user = fetch('https://jsonplaceholder.typicode.com/users')
+    //   .then(response => response.json())
+    //     .then(data => {
+    //         console.log('GET Request - List of Users:', data);
+    //     })
+
+    //     // PUT request: Update data on a server
+    //     // Example: Updating a user's information
+    //     fetch('https://jsonplaceholder.typicode.com/users/11', {
+    //         method: 'PUT',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             id: 11,
+    //             name: 'John Doe',
+    //             email: 'john.doe@example.com'
+    //         })
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log('PUT Request - Updated User:', data);
+    //     })
+
+    //     // Post request: Create new data on a server
+    //     // Example: Creating a new user
+    //     fetch('https://jsonplaceholder.typicode.com/users', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({
+    //             name: 'Jane Smith',
+    //             email: 'jane.smith@example.com'
+    //         })
+    //     })
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log('POST Request - New User:', data);
+    //     })
+
+    //     // DELETE request: Remove data from a server
+    //     // Example: Deleting a user
+    //     fetch('https://jsonplaceholder.typicode.com/users/11', {
+    //         method: 'DELETE'
+    //     })
+    //     .then(response => {
+    //         if (response.ok) {
+    //             console.log('DELETE Request - User deleted successfully');
+    //         } else {
+    //             console.log('DELETE Request - Failed to delete user');
+    //         }
+    //     })
+
+    // JSON conversion
+
+    const expense = {
+      title: "Food",
+      amount: 100,
+    };
+    const expenseJSON = JSON.stringify(expense);
+    console.log("JSON Conversion - Expense JSON:", expenseJSON);
+    console.log(expenseJSON.title); // This will be undefined because expenseJSON is a string
+
+    const parsedExpense = JSON.parse(expenseJSON);
+    console.log("JSON Conversion - Parsed Expense:", parsedExpense);
+    console.log(parsedExpense.title);
+
+    // Fetching data from a REST API endpoint
+    fetch("http://localhost:4000/users")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("GET data", data);
+      });
+
+    //fetch()+ async/await
+    //   GET request using async/await
+    async function fetchTodos() {
+      const response = await fetch("http://localhost:4000/users");
+      const data = await response.json();
+      console.log("GET Request with async/await - List of Todos:", data);
+    }
+    fetchTodos();
+    // POST request using async/await
+    async function createuser() {
+      const response = await fetch("http://localhost:4000/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: 2,
+          name: "Aagyat",
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+    }
+    createuser();
+
+    // HTTP Status Code : 3-digit number sent by the server to describe the result of request.
+    //       1xx → "Something informational"
+    // 2xx → "Success"
+    // 3xx → "Go somewhere else"
+    // 4xx → "Client made a bad request"
+    // 5xx → "Server had a problem"
+
+    // 200 : when the request is successful and the server returns the requested data.
+    // 201 : when a new resource is successfully created on the server.
+    // 204 : when the request is successful, but there is no content to return.
+    // 400 : when the server cannot process the request due to a client error (e.g., invalid input).
+    // 401 : when the client is not authenticated and needs to provide valid credentials.
+    // 403 : when the client is authenticated but does not have permission to access the requested resource.
+    // 404 : when the requested resource is not found on the server.
+    //409 : when there is a conflict with the current state of the resource (e.g., trying to create a resource that already exists).
+    // 422 : when the server understands the request but cannot process it due to semantic errors (e.g., validation errors).
+    // 500 : when the server encounters an unexpected error while processing the request (e.g., a server-side error).
+    //502 : when the server acts as a gateway or proxy and receives an invalid response from the upstream server.
+    // 503 : when the server is temporarily unavailable (e.g., due to maintenance or overload).
+
+
+// | Status | Meaning               | Typical example                  |
+// | ------ | --------------------- | -------------------------------- |
+// | `200`  | OK                    | Successful GET/update            |
+// | `201`  | Created               | Successful POST                  |
+// | `204`  | No Content            | Successful DELETE                |
+// | `400`  | Bad Request           | Invalid request                  |
+// | `401`  | Unauthorized          | Authentication required/failed   |
+// | `403`  | Forbidden             | Insufficient permission          |
+// | `404`  | Not Found             | Resource doesn't exist           |
+// | `409`  | Conflict              | Duplicate/conflicting state      |
+// | `422`  | Unprocessable Content | Validation/business-rule failure |
+// | `500`  | Internal Server Error | Unexpected server error          |
+// | `503`  | Service Unavailable   | Service temporarily unavailable  |
+
+
+
+// API Error Handling 
+
+  </script>
 </body>
+
 </html>

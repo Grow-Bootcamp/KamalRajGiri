@@ -46,8 +46,11 @@
     }
 
     getBalance() {
-        return this.#balance;
+        // return this.#balance; 
+        return this.balance;  
+        // return balance; // not allowed
     }
+
 
 }
 const account = new BankAccount("Kamal", 1000);

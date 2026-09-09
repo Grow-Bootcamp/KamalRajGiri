@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script>
+        class Hello{
+            #Hello ;
+            constructor (firstName = "Kamal", lastName){
+                this.firstName = firstName;
+                this.lastName = lastName;
+                this.#Hello = `Hello ${this.firstName} ${this.lastName}`;
+            }
+            helloWorld(){
+                console.log(`${this.firstName} ${this.lastName} `); 
+            }
+            byeWorld(payoneer){
+                console.log(`${payoneer} is good`);
+            }
+        }
+        const instance = new Hello("Kamal", "Giri");
+        instance.helloWorld();
+        instance.byeWorld("Payoneer");
+        
+
+        const instance2 = new Hello();
+        instance2.helloWorld();
+
+
+        let arr = [1,2,3,4,5];
+        let [,,,batr ] = arr;
+        console.log(batr);
+
+
+        class Hello{
+            // staic hell()(){
+
+            // }
+        }
+
+    </script>
+</body>
+</html>
