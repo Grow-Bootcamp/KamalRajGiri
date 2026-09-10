@@ -1,0 +1,41 @@
+{
+  "expenses": [
+    {
+      "id": "1",
+      "title": "Food",
+      "amount": 100,
+      "category": "Food"
+    },
+    {
+      "id": "1odMpeTHJbI",
+      "title": "Momo",
+      "amount": 100,
+      "category": "Food"
+    },
+    {
+      "id": "Y7JtaTpeni8",
+      "title": "Pen",
+      "amount": 20,
+      "category": "Education"
+    },
+    {
+      "id": "s9d0G_yLQK8",
+      "title": "Transport",
+      "amount": 200,
+      "category": "Travel"
+    },
+    {
+      "id": "TAzJBeoR0uI",
+      "title": "Transport",
+      "amount": 47,
+      "category": "travel"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "name": "Kamal"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

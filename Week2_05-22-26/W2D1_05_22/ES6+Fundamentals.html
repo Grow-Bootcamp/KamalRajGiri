@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ES6+ Fundamentals</title>
+  </head>
+  <body>
+    <h1>ES6+ Fundamentals</h1>
+
+    <script>
+      console.log("ES6+ Fundamentals");
+      var name = "Kamal";
+      name = "Aagyat";
+      console.log(name);
+      let age = 20;
+      // let age = 21; // Error
+      age = 21;
+      console.log(age);
+      const country = "Nepal";
+      // country = "India"; // Error
+      console.log(country);
+      // const → when the variable doesn't need reassignment
+      // let   → when the variable needs reassignment
+      // var   → generally avoid in modern JavaScript
+
+      // traditional function
+      function multiply(a, b) {
+        return a * b;
+      }
+      console.log(multiply(4, 5)); // Output: 20
+      // Arrow Functions
+      const add = (a, b) => {
+        return a + b;
+      };
+      console.log(add(5, 3)); // Output: 8
+      const divide = (a, b) => a / b; // Implicit return
+      console.log(divide(10, 2)); // Output: 5
+
+      const square = (x) => x * x; // Single parameter, implicit return
+      console.log(square(4)); // Output: 16
+
+      // Template Literals
+      console.log(
+        "Hello," +
+          name +
+          "! You are " +
+          age +
+          " years old and live in " +
+          country +
+          ".",
+      ); // normal string concatenation
+      const greeting = `Hello, ${name}! You are ${age} years old and live in ${country}.`;
+      console.log(greeting); // Template literal
+
+      // Destructuring
+      const person = { firstName: "John", lastName: "Doe", age: 30 }; // Object
+      console.table(person);
+      const { firstName, lastName, age: personAge } = person; // Object destructuring
+      // console.log(firstName); // Output: John
+      console.log(firstName); // Output: John
+      console.log(lastName); // Output: Doe
+      console.log(personAge); // Output: 30
+
+      //Spread Operator
+      const arr1 = [1, 2, 3];
+      const arr2 = [4, 5, 6];
+      const combined = [...arr1, ...arr2]; // Spread operator
+      console.log(combined); // Output: [1, 2, 3, 4, 5, 6]
+
+      // Rest Parameters
+      function sum(...numbers) {
+        // Rest parameter
+        return numbers.reduce((acc, curr) => acc + curr, 0);
+      }
+      console.log(sum(1, 2, 3, 4, 5)); // Output: 15
+      //Spread → expands values
+      //Rest   → collects values
+
+      // Default Parameters
+      function greetUser(name = "Guest") {
+        // Default parameter
+        console.log(`Hello, ${name}!`);
+      }
+      greetUser(); // Output: Hello, Guest!
+      greetUser("Alice"); // Output: Hello, Alice!
+
+      // for  ...of
+      const fruits = ["apple", "banana", "cherry"];
+      for (const fruit of fruits) {
+        // for...of loop
+        console.log(fruit);
+      }
+
+      // Callback is a function passed into another function as an argument, which is then invoked inside the outer function to complete some kind of routine or action.
+      // Callbacks
+      function greet(name) {
+        console.log("Hello " + name);
+      }
+      function processUser(callback) {
+        callback("Kamal");
+      }
+      processUser(greet);
+
+      // Asynchronous Callbacks
+      console.log("Start");
+      setTimeout(() => {
+        console.log("Inside setTimeout");
+      }, 2000);
+      console.log("End");
+
+      // Promises : An object representing the eventual completion or failure of an asynchronous operation.
+
+      const promise = new Promise((resolve, reject) => {
+        const success = true; // Change to false to test rejection
+        if (success) {
+          resolve("Promise resolved successfully!");
+        } else {
+          reject("Promise rejected.");
+        }
+      });
+      promise
+        .then((message) => {
+          console.log(message); // Output: Promise resolved successfully!
+        })
+        .catch((error) => {
+          console.error(error); // Output: Promise rejected.
+        });
+
+      const greete = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve("Hello, Kamal!");
+        }, 3000);
+      });
+
+      greete.then((message) => {
+        console.log(message); // Output: Hello, Kamal!
+      });
+
+      const doubleAfterDelay = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          const num = 5;
+          resolve(num);
+          // reject(num);
+        }, 4000);
+      });
+      doubleAfterDelay
+        .then((number) => {
+          return number * 2;
+        })
+        .then((result) => {
+          console.log(result);
+        })
+        .catch(error => {
+          console.log("Error Caught: ", error);
+        });
+
+// Async/Await
+function getUser(){
+  return new Promise ((resolve, reject) =>{
+    setTimeout(()=> {
+      console.log("Fetched user data.");
+      resolve({id:101, name: "Kamal"});
+    },1000);
+  });
+}
+
+function getOrders(user){
+  return new Promise((resolve, reject)=>{
+    setTimeout(()=>{
+      console.log(`Fetched order for user ${user.name}`);
+      resolve(["Order_A","Order_B"]);
+    },1000);
+  });
+}
+
+function getPayment(orders){
+  return new Promise((resolve, reject)=>{
+setTimeout(() => {
+      console.log(`Payment recieved for order ${orders.length} orders.`);
+    resolve({ status: "paid", amount: "RS 3000"});
+},1000);
+  });
+}
+
+      async function processsUser() {
+        try {
+          const user = await getUser();
+          const orders = await getOrders(user);
+          const payment = await getPayment(orders);
+
+          console.log(payment);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      processsUser();
+
+      
+    </script>
+  </body>
+</html>

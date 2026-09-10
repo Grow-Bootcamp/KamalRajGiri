@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caching in JS</title>
+</head>
+<body>
+    <h1>Caching in JS</h1>
+    <p>Caching means storing previously obtained data somewhere so we can reuse it instead of doing the same work/request again.</p>
+    <p>In JavaScript, caching can be implemented in various ways, such as using variables, objects, or even browser storage mechanisms like localStorage or sessionStorage.</p>
+    <h4>Why Use Caching?</h4>
+    <p> Performance : avoid redundant operations and improve response times.
+        <br>
+        User Experience : provide faster interactions and smoother navigation.
+        <br>
+        Resource Efficiency : reduce network requests and server load.
+    </p>
+    <p>Memoization : Memoization is a caching technique where a function stores results based on its inputs. if calculated earlier with the same inputs, it can return the cached result instead of recalculating. else it will calculate and cache the result.</p>
+    <p> One limitation of memory caching is that it lives inside running js process and if the process is terminated, the cache is lost. so memory cache is temprorary. This is called volatile/ in-memory caching.</p>
+
+    <h3>Cache Strategies</h3>
+    <ul>
+        <li>Cache-aside: application checks cache first</li>
+        <li>Write-through: application updates cache and backend simultaneously</li>
+        <li>Write-back: application updates cache and backend at different times</li>
+    </ul>
+
+
+
+
+    <script>
+        function calculateSomething(number) {
+    console.log("Calculating...");
+    return number * 2;
+}
+calculateSomething(10); // Output: Calculating... 20
+calculateSomething(10); // Output: Calculating... 20 (No caching, recalculates every time)
+
+
+const cache = new Map();
+cache.set("user:1", {
+    id: 1,
+    name: "Kamal"
+});
+console.log(cache.get("user:1")); // Output: { id: 1, name: "Kamal" }
+
+// localstorage as a browser cache
+
+localStorage.setItem("username", "Kamal");
+console.log(localStorage.getItem("username")); // Output: Kamal
+
+// the cache will be available even after the page is refreshed or the browser is closed and reopened, until it is explicitly cleared.
+// so localStorage is a persistent cache, unlike memory cache which is volatile.
+
+// localstorage is not a perfect cache, it has some limitations like it can only store strings, and it has a size limit (usually around 5MB). so we need to be careful about what we store in localStorage. stale data can also be a problem, if the data in localStorage is not updated, it can become stale and lead to inconsistencies. so we need to implement some mechanism to invalidate or refresh the cache when needed. 
+// stale data : Data that is no longer current or accurate.
+// it is important to implement expiration or refresh mechanisms for cached data.
+
+// cache expiration :  cache + expiration time = controlled caching 
+// cache invalidation :  cache + invalidation mechanism = controlled caching
+
+
+// Example of cache
+
+const cacheData = new Map();
+function calculateSquare(number) {
+    if (cacheData.has(number)) {
+        console.log("Returning cached result for", number , " : ", cacheData.get(number));
+        return cacheData.get(number);
+    } else {
+        console.log("Calculating square for", number );
+        const result = number * number;
+        cacheData.set(number, result);
+        console.log("Caching result for", number , " : ", result);
+        return result;
+    }
+}
+calculateSquare(5); // Output: Calculating square for 5
+calculateSquare(5); // Output: Returning cached result for 5 : 25
+calculateSquare(10); // Output: Calculating square for 10
+calculateSquare(10); // Output: Returning cached result for 10 : 100
+calculateSquare(5); // Output: Returning cached result for 5 : 25
+
+    </script>
+</body>
+</html>

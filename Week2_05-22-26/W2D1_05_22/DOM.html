@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Fundamentals</title>
+    <style>
+      #button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        /* background: yellowgreen; */
+        border: 1px solid black;
+      }
+      .active {
+        background-color: blue;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <h1></h1>
+    <h3>DOM Fundamentals</h3>
+    <p>
+      Data Object Model : The DOM is a programming interface for HTML and XML
+      documents. It represents the structure of a document as a tree of nodes
+      and objects.
+    </p>
+
+    <h3 class="title">DOM Fundamentals</h3>
+    <h3 id="heading">DOM Fundamentals</h3>
+
+    <p class="item">Item 1</p>
+    <p class="item">Item 2</p>
+    <p class="item">Item 3</p>
+
+    <div class="text">This is some text.</div>
+    <img src="https://picsum.photos/seed/picsum/300/200" alt="Random img" />
+    <br /><br />
+
+    <input id="username" type="text" placeholder="Enter your name" />
+
+    <br /><br />
+    <button id="button">Save</button>
+    <br /><br />
+    <div id="container">
+      <p id="message">Hello</p>
+      <button id="clickButton">Click</button>
+    </div>
+
+    <ul id="todolist"></ul>
+
+    <form id="expenseForm">
+
+    <input id="title1" type="text">
+    <input id="amount" type="number">
+
+    <button type="submit">Add Expense</button>
+
+</form>
+
+    <script>
+      console.log("DOM Fundamentals");
+      document.querySelector("h1").textContent = "DOM Fundamentals";
+      document.querySelector("h1").style.color = "blue";
+
+      console.log(document); // The document object represents the entire HTML document and provides methods to access and manipulate its elements.
+
+      // Selecting Elements
+      const heading = document.querySelector("h1"); // Selects the first <h1> element in the document.
+      console.log(heading);
+      console.log(heading.textContent);
+      console.log(document.querySelector(".title")); // Selects the first element with the class "title".
+      console.log(document.querySelector("#heading")); // Selects the element with the ID "heading".
+      console.log(document.querySelector(".item")); // Selects the first element with the class "item".
+      console.log(document.querySelectorAll("h3")); // Selects all <h3> elements in the document.
+      console.log(document.querySelectorAll(".item")); // Selects all elements with the class "item".
+
+      console.log(document.getElementById("heading")); // Selects the element with the ID "heading".
+      console.log(document.getElementsByClassName("item")); // Selects all elements with the class "item".
+      console.log(document.getElementsByTagName("p")); // Selects all <p> elements in the document.
+
+      const textDiv = document.querySelector(".text");
+      console.log(textDiv.textContent); // Logs the text content of the <div> with class "text".
+
+      // Changing Text
+      textDiv.textContent = "This is the updated text."; // Updates the text content of the <div> with class "text".
+      console.log(textDiv.textContent); // Logs the updated text content of the <div> with class "text".
+
+      const element = document.querySelector(".text"); // Selects the first element with the class "text".
+      element.textContent = "this is the replaced text"; // Updates the text content of the selected element.\
+      element.innerHTML = "<strong>This is bold text</strong>"; // Updates the inner HTML of the selected element, replacing its content with bold text.
+
+      // Changing Attributes
+      const logo = document.querySelector("img"); // Selects the first <img> element in the document.
+      const currentSrc = logo.getAttribute("src"); // Gets the current value of the "src" attribute of the <img> element.
+      console.log("Current src:", currentSrc); // Logs the current value of the "src" attribute.
+      logo.setAttribute("src", "https://picsum.photos/300/200/"); // Sets a new value for the "src" attribute of the <img> element, changing the image displayed.
+      const newSrc = logo.getAttribute("src"); // Gets the new value of the "src" attribute of the <img> element.
+      console.log("New src:", newSrc); // Logs the new value of the "src" attribute.
+
+      logo.setAttribute("alt", "Updated Random Image");
+      logo.removeAttribute("alt"); // Removes the "alt" attribute from the <img> element.
+
+      const input = document.querySelector("#username");
+      console.log(input.value);
+
+      input.value = "Kamal"; // Sets the value of the input field with ID "username" to "Kamal".
+
+      input.style.color = "red"; // Changes the text color of the input field to red.
+      input.style.backgroundColor = "lightgray"; // Changes the background color of the input field to light gray.
+
+      // Adding and Removing Classes
+      const button = document.querySelector("#button"); // Selects the button element with ID "button".
+      button.classList.add("active"); // Adds the "active" class to the button element, applying any associated styles.
+      button.classList.remove("active"); // Removes the "active" class from the button element, reverting any associated styles.
+      button.classList.toggle("active"); // Toggles the "active" class on the button element. If the class is present, it removes it; if it's absent, it adds it.
+
+      // Checking a class
+      if (button.classList.contains("active")) {
+        // Checks if the button element has the "active" class.
+        console.log("Button is active"); // Logs a message if the button is active.
+      } else {
+        console.log("Button is not active"); // Logs a message if the button is not active.
+      }
+
+      // DOM Traversal : Finding Elements in the DOM
+      const container = document.querySelector("#container");
+      console.log(container.parentElement); // Logs the parent element of the container.
+      console.log(container.children); // Logs the child elements of the container.
+      console.log(container.firstElementChild); // Logs the first child element of the container.
+      console.log(container.lastElementChild); // Logs the last child element of the container.
+      const message = document.querySelector("#message");
+      console.log(message.nextElementSibling); // Logs the next sibling element of the message.
+      console.log(message.previousElementSibling); // Logs the previous sibling element of the message.
+      console.log(message.parentElement); // Logs the parent element of the message.
+
+      // Creating DOM Elements
+
+      const list = document.querySelector("#todolist");
+      const li = document.createElement("li");
+      li.textContent = "Learn JavaScript"; // Sets the text content of the new <li> element.
+      list.appendChild(li); // Appends the new <li> element as a child of the <ul> with ID "todolist".
+      const li2 = document.createElement("li");
+      li2.textContent = "Learn DOM Manipulation"; // Sets the text content of the new <li> element.
+      list.appendChild(li2); // Appends the new <li> element as a child of the <ul> with ID "todolist".
+      const item = document.querySelector("#todolist");
+      console.log(item);
+      // item.remove(); // Removes the <ul> element with ID "todolist" from the DOM.
+      item.removeChild(li); // Removes the first <li> element from the <ul> with ID "todolist".
+
+      //DOM Events : Responding to User Interactions
+      const btn = document.querySelector("#clickButton");
+      btn.addEventListener("click", function () {
+        console.log("Button clicked!");
+      });
+
+      btn.addEventListener("click",event=>{
+        console.log(event); // Logs the event object when the button is clicked.
+        console.log(event.target); // Logs the target element of the event (the button that was clicked).
+      });
+
+
+      // Form Example
+      const form = document.querySelector("#expenseForm");
+        form.addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevents the default form submission behavior.
+            const title = document.querySelector("#title1").value; // Gets the value of the input field with ID "title1".
+            const amount = document.querySelector("#amount").value; // Gets the value of the input field with ID "amount".
+            console.log("Expense Title:", title); // Logs the expense title entered in the form.
+            console.log("Expense Amount:", amount); // Logs the expense amount entered in the form.
+        });
+
+        // preventDefault() : Prevents the default action associated with an event from occurring. For example, in a form submission, it prevents the page from reloading.
+        </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+Week2
+Day 2: Docker, Caching, OAuth & TypeScript Basics  
+
+Get introduced to containerization with Docker, caching strategies in JavaScript, authentication flows using OAuth/OAuth2, and the fundamentals of TypeScript.
+
+Scope
+
+
+
+Study Docker concepts and their implementation in both frontend and backend projects.
+
+Study caching concepts in JavaScript.
+
+Study OAuth and OAuth 2.0, access tokens, refresh tokens, and the concept of CORS.
+
+Study TypeScript basics: types, interfaces, functions, and generics, with code examples and use-case scenarios.
+
+Document the day's key learnings, findings, and code snippets in a dedicated learning-log file (Markdown/Doc) and commit it to the repository.
+
+Raise a GitHub Pull Request for the day's practice code/work and send it to your mentor for review.
+
+
+
+Acceptance Criteria
+
+
+
+Can explain the purpose of Docker and containerize a sample frontend or backend app.
+
+Can explain the OAuth 2.0 flow including access token and refresh token usage.
+
+Can explain CORS and identify when a CORS error would occur.
+
+Can write basic TypeScript code using types, interfaces, functions, and generics.
+
+A daily learning-log file capturing the day's topics and key takeaways is created/updated and committed to the repository.
+
+A GitHub PR is raised for the day's work and sent to the mentor for review.
+
+
+The learning-log file link and the PR link are both posted in the Zoho task's comment section and in the corresponding Microsoft Teams comment/thread.

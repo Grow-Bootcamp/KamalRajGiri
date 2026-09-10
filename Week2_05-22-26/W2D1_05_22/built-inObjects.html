@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Built-in Objects</title>
+  </head>
+  <body>
+    <h1>Built-in Objects</h1>
+
+    <script>
+      console.log("Built-in Objects");
+      // Objects that are already available in JavaScript, providing useful methods and properties for various tasks.
+      // Examples of built-in objects include:
+
+      //Array Methods
+      const expenses = [
+        { title: "food", amount: 200 },
+        { title: "transport", amount: 50 },
+        { title: "entertainment", amount: 175 },
+      ];
+
+      // forEach()
+      expenses.forEach((expense) => {
+        console.log(`Expense: ${expense.title}, Amount: ${expense.amount}`);
+      });
+
+      //Map
+      const expenseTitles = expenses.map((expense) => expense.title);
+      console.log("Expense Titles:", expenseTitles);
+
+      // Filter
+      const highExpenses = expenses.filter((expense) => expense.amount > 180);
+      console.log("High Expenses:", highExpenses);
+
+      // Find
+      const transportExpense = expenses.find(
+        (expense) => expense.title === "transport",
+      );
+      console.log("Transport Expense:", transportExpense);
+
+      // Find VS Filter : find returns the first matching element, while filter returns an array of all matching elements.
+
+      //some
+      const hasHighExpense = expenses.some((expense) => expense.amount > 180);
+      console.log("Has High Expense:", hasHighExpense);
+
+      //every
+      const allExpensesAbove50 = expenses.every(
+        (expense) => expense.amount > 50,
+      );
+      console.log("All Expenses Above 50:", allExpensesAbove50);
+
+      // Reduce
+      const totalAmount = expenses.reduce(
+        (total, expense) => total + expense.amount,
+        0,
+      );
+      console.log("Total Amount:", totalAmount);
+
+      // forEach → "Do something"
+      // map     → "Transform"
+      // filter  → "Select"
+      // find    → "Find one"
+      // some    → "Does any?"
+      // every   → "Do all?"
+      // reduce  → "Combine"
+
+//Object Methods
+
+const person ={
+    name : "kamal",
+    age : 23,
+    country : "Nepal"
+}
+
+console.log(Object.keys(person)); // Output: ["name", "age", "country"]
+console.log(Object.values(person)); // Output: ["Kamal", 23, "Nepal"]
+console.table(Object.entries(person)); // Output: [["name", "Kamal"], ["age", 23], ["country", "Nepal"]]
+
+
+// String Methods
+const str = "Hello, World!";
+console.log(str.length); // Output: 13
+console.log(str.toUpperCase()); // Output: "HELLO, WORLD!"
+console.log(str.toLowerCase()); // Output: "hello, world!"
+console.log(str.includes("World")); // Output: true
+console.log(str.startsWith("Hello")); // Output: true
+console.log(str.endsWith("!")); // Output: true
+console.log(str.trim()); // Output: "Hello, World!"
+console.log(str.split(", ")); // Output: ["Hello", "World!"]
+
+const skills = ["JavaScript", "HTML", "CSS"];
+console.log(skills.join(", ")); // Output: "JavaScript, HTML, CSS"
+
+
+// JSON Methods
+const jsonString = {name: "Kamal", age: 23, country: "Nepal"};
+const jsonObject = JSON.stringify(jsonString);
+console.log(jsonObject); // Output: '{"name":"Kamal","age":23,"country":"Nepal"}'
+const parsedObject = JSON.parse(jsonObject);
+console.table(parsedObject); // Output: { name: "Kamal", age: 23, country: "Nepal" }
+console.log(parsedObject.name); // Output: "Kamal"
+
+// stringify → converts a JavaScript object into a JSON string
+// parse     → converts a JSON string back into a JavaScript object
+
+
+
+
+
+// Date Methods
+const now = new Date();
+console.log(now.toDateString()); // Output: "Wed May 22 2024"
+console.log(now.toTimeString()); // Output: "14:30:00 GMT+0000 (Coordinated Universal Time)"
+console.log(now.getFullYear()); // Output: 2024
+
+
+
+    </script>
+  </body>
+</html>
