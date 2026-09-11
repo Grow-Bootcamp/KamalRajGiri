@@ -1,0 +1,27 @@
+1. What is testing ?
+Testing means checking whether our application behaves as expected. suppose we have add(10,20) we expext 30,  A test automatically checks this instead of us manually running the application and looking at the result.
+
+2. Why testing in backend application?
+backend appliation contains things like authenitaction, authorization, db, business logic, REST APIs, validation, payments , sessions, error handling etc , a smll bug here can cause serious problems. for eg a function returning a*b may be change to a+b , this works fine but the business logic is wrong , a test catch this problem. 
+
+Testing therefore helps us 
+-find early bugs : instead of finding bug after deployment 
+-Prevent regression : it occurs when a change that was supposed to improve one part of the application breaks something that previously worked.
+-Refactor safety  : you can change the internal implementation while tests verify that behavior remains correct.
+-Improve code quality : writing testable code often encourages smaller functios, clear responsibility, predictable inputs/outputs, better seperation pf concerns.
+-Increase confidene : before deployment if all tests passes , you have more confidene that your changes havent broken existing functionality.
+
+*The biggest problem of testing is to give confidence that existing functionality still works when we change or add code.
+
+# Manual Testing VS Automated Testing
+-Manual testing : a person performs the test mannually , useful but repeatative
+open postman -> post /login -> enter credentials --send-> check credentials
+
+- Automatedx testing : npm test -> Test Runner -> run test case -> Assertions -> pass or fail
+
+**Manual testing requires a person to repeat the procedure; automated testing allows the computer to repeat it consistently.**
+**Automated testing doesn't completely replace manual testing. They complement each other.**
+
+# Testing levels #
+Unit , integration and End-To-End
+
