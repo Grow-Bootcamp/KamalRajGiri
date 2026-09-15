@@ -1,0 +1,46 @@
+# ORM - Object-Relational Mapping
+* This topic is important because it connects application code with relational databases.
+Suppose our backend is written in JavaScript: Node.js + Express but our database is: MySQL / PostgreSQL .The application works with JavaScript objects, while the relational database works with tables and rows. ORM helps bridge that difference. 
+* An ORM is a software layer that maps objects in application code to records in a relational database and provides programmatic ways to interact with the database.
+* An ORM is not a database.The ORM is the middle layer.Think of it as an interpreter/bridge between your application's object-oriented programming model and the relational database model.
+
+# Popular ORMs
+You'll encounter several ORM tools.
+* For JavaScript/Node.js: Sequelize ,TypeORM ,Prisma
+
+For other languages:
+Java → Hibernate
+Python → Django ORM / SQLAlchemy
+C# → Entity Framework
+
+# Why Developers Use ORMs
+1. Less Raw SQL : Instead of writing SQL for every common operation, developers can work through the ORM's API. This can make application code more consistent.
+2. Object-Oriented Programming : Your application already thinks in terms of User, Product, Order etc . ORMs allow these application concepts to correspond naturally with database entities.
+3. Database Abstraction : An ORM can hide some database-specific details.
+
+# When Should You Use an ORM?
+An ORM can be particularly useful when:
+application has many models
+relationships are common
+CRUD operations are frequent
+development speed matters
+you want consistent application-level database access
+
+But for:
+highly optimized queries
+complex reporting
+database-specific features
+
+developers may sometimes use raw SQL alongside the ORM. Many real applications use a hybrid approach.
+
+# What is ORM?
+ORM stands for Object-Relational Mapping. It is a technique/software layer that maps application objects and models to relational database tables and records, allowing developers to interact with the database using application-level abstractions.
+
+# Why use ORM?
+It reduces repetitive SQL, provides an object-oriented interface, helps manage relationships, and can improve developer productivity and maintainability.
+
+# Does ORM replace SQL?
+No. ORMs abstract many database operations, but understanding SQL remains important for database design, performance optimization, and complex queries.
+
+# Is MongoDB an ORM?
+No. MongoDB is a NoSQL database. Tools such as Mongoose provide an object-document modeling layer for MongoDB.

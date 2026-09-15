@@ -1,0 +1,140 @@
+# A database 
+is a system used to store, organize, manage, and retrieve data efficiently.
+
+# DBMS
+Database Management System is the software used to create, manage, and interact with databases.
+
+# why cant we use JSON file ? : 
+JSON file can be used for small application but for applications with man users, many tasks , multiple requests per second,  multiple user modifying data simaltenously it (JSON file) become problematic. so we need system that can efficiently handle storage, retrival, modification, deletation , relationship, multiple users and data consistency.
+
+# The Four Basic Database Operations :
+ Almost every application needs to perform four fundamental operations. We call them CRUD : Create, Read, Update and Delete.
+
+* Application = logic
+* Database = persistent data
+* API = communication between application components
+* CRUD = basic operations performed on data
+
+# ACID
+ is an acronym for the four major properties of a database transaction: Atomicity , consistency , isolation , Durability.
+
+* Atomicity : all or nothing treating transaction as a single unit
+* Consistency : data remains constant according to the defined rule before and after transaction 
+* Isolation : Cooncurrent transaction dont interfere with each other
+* Durability : onse the transaction is commited , it presists even after system failure 
+
+# Relational Database : 
+stores data in the form of tables and establishes relationships between those tables.
+
+# SQL : 
+Structured Query Language is a language used to communicate with relational databases. eg SELECT * FROM users; // give all record form student table 
+
+# Table :
+   Collection of row and column (complete Structure) eg. students
+* Column : A property attribute
+* Row : one complete record 
+
+# Primary Key : 
+A primary key is a column, or combination of columns, used to uniquely identify each record in a table.It should be unique, not null and stable enough to identify the record. Mostly we use id as primary key . eg Stuent_id in student table 
+
+# Foreign Key : 
+A foreign key is used to establish a relationship between tables.
+
+# Types Of Relationships
+* One-to-One : One record relates to one record. eg. one person has one passport.
+* One-to-Many : One record relates to many records. eg. one user can have many tasks.
+* Many-to-Many : Many records relate to many records.eg. one student can take many courses and one coures can have many students.
+
+# Normalization
+Normalization is the process of organizing data to reduce unnecessary duplication and improve data integrity.The goal is to Store each piece of information in an appropriate place and connect it through relationships. eg if a department is changed we may need to change it in multiple tables if it was normalized changing at one table changes all data .
+
+# SQL Operations
+* Create : add data 
+INSERT  : INSERT INTO students (name, age) VALUES ('Hari', 22);
+* Read : retrive data
+SELECT : SELECT * FROM users;
+* Update : modify data
+UPDATE : UPDATE users SET age = 24 WHERE id = 1;
+* Delete : remove data 
+DELETE : DELETE FROM users WHERE id = 3;
+
+
+# Schema 
+A schema describes how data is structured.The database knows what kind of data each column is supposed to contain.
+
+# When Is SQL a Good Choice?
+SQL databases are particularly useful when:
+Data is highly structured
+Relationships are important
+Data consistency is critical
+Complex queries
+
+
+
+# NoSQL
+NoSQL generally refers to databases that use non-relational data models rather than the traditional relational table model.
+NoSQL refers to a group of non-relational database systems that use data models such as documents, key-value pairs, wide columns, or graphs. They are often useful for flexible data structures, large-scale distributed applications, and workloads where a traditional relational model may not be the best fit.
+
+# Document 
+Is a struvtured data record .instead of storing data in table rows , data are represented as a document that looks very similar to a JSON. That's one reason MongoDB is popular with JavaScript/Node.js applications.A document model can represent these naturally as nested data.
+
+# Collection
+is a group of related documents. In MongoDB , instead of a table, we generally use a collection.
+
+# Flexible Schema
+This is one of the biggest differences from traditional SQL databases.
+Imagine two MongoDB documents:
+{
+    "name": "Kamal",
+    "age": 23
+}
+and : 
+{
+    "name": "Ram",
+    "age": 22,
+    "skills": ["Python", "Django"]
+}
+They don't necessarily need to have exactly the same fields. This is called a flexible schema.
+
+# Does NoSQL Mean "No Schema"?
+NoSQL databases often provide more flexible or application-defined schemas rather than requiring every record to conform to a rigid relational table structure.
+
+# NoSQL Is Not One Single Database Type
+NoSQL databases can use different models.
+* Document Databases 
+* Key-Value Databases 
+* Wide-Column Databases
+* Graph Databases
+
+# When is NoSQL a Good Choice?
+NoSQL can be a good fit when:
+* Data structure changes frequently
+* Data is naturally document-like
+* You need horizontal scaling
+* Very large-scale workloads
+
+# What is MongoDB?
+MongoDB is a document-oriented NoSQL database that stores data as BSON documents inside collections. Its document model provides flexible schemas and supports nested objects and arrays.
+
+# The real Decision
+
+Ask for :  
+What type of data do I have?
+          ↓
+How are users accessing it?
+          ↓
+How strong are the relationships?
+          ↓
+How important are transactions?
+          ↓
+How frequently does the structure change?
+          ↓
+How much scalability is required?
+          ↓
+Choose the appropriate database model
+
+
+# Scaling
+magine your application grows and your database need to handle increasing workloads. These are two broad scaling concepts.
+* Verticle Scaling  : Make one machine more powerful.
+* Hoeizontal Scaling : Add more machines.
