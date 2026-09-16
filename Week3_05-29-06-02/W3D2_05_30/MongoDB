@@ -1,0 +1,103 @@
+# MongoDB
+is a document-oriented NoSQL database. Instead of storing information primarily as rows in tables, MongoDB stores records as documents.
+# Database
+A MongoDB database is a container for collections. For example School_db could contain students, teachers, courses, departments.
+
+# Collection 
+It is a group of related documents. Eg. students might contain student documents.
+
+# Document 
+A MongoDB document is a record represented using BSON.
+
+For learning purposes, it looks very similar to JSON:
+{
+    "name": "Kamal",
+    "age": 23,
+    "semester": 7
+}
+this document represent one student 
+Another 
+{
+    "name": "Kamal",
+    "age": 23,
+    "semester": 7
+}
+And Another 
+{
+    "name": "Kamal",
+    "age": 23,
+    "semester": 7
+} 
+All three can belong to students.
+
+# Fields
+inside a document, we have fields Eg.
+{
+    "name": "Sita",
+    "age": 21,
+    "semester": 7
+}
+we have name, age , semester are fields. and their values are "sita" , 23 , 7 .
+
+
+# MongoDB's _id
+Every MongoDB document normally has a unique: _id
+
+for eg 
+{
+    "_id": ObjectId("..."),
+    "name": "Kamal",
+    "age": 23
+}
+_id uniquely identifies the document within its collection.
+
+# ObjectId 
+MongoDB commonly generates _id values using an ObjectId.MongoDB automatically provides a unique _id for documents when one isn't supplied.
+
+# BSON : Binary JSON 
+It is a binary-encoded serialization format inspired by JSON. MongoDB stores documents internally using BSON.
+* JSON supports common types such as string, number, boolean, array, object, null
+* BSON supports additional types useful for database operations , including types such as: ObjectId, Date, Binary data, Decimal128
+
+
+# Embedding vs Referencing
+Option 1 — Embed
+{
+    "name": "Kamal",
+    "address": {
+        "city": "Mahendranagar",
+        "country": "Nepal"
+    }
+}
+Everything is inside one document.
+
+Option 2 — Reference
+User:
+{
+    "name": "Kamal",
+    "addressId": "abc123"
+}
+Address:
+{
+    "_id": "abc123",
+    "city": "Mahendranagar",
+    "country": "Nepal"
+}
+Now the user references another document.
+
+# When Would You Embed?
+Embedding can make sense when:
+
+* the related data belongs closely to the parent
+* it is usually retrieved together
+* the embedded data is relatively bounded
+
+# When Would You Reference?
+
+References can make sense when:
+
+* data is shared by multiple documents
+* the related data is large
+* the relationship is more independent
+* the related data changes separately
+* embedding would cause excessive document growth or duplication
