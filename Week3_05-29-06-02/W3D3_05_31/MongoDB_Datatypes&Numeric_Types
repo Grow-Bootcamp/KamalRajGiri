@@ -1,0 +1,15 @@
+# Common BSON Types
+
+# | Type       | Example               | Use                        |
+| ---------- | --------------------- | -------------------------- |
+| `string`   | `"Kamal"`             | Text                       |
+| `int`      | `23`                  | 32-bit whole number        |
+| `long`     | `NumberLong(100000)`  | Large whole number         |
+| `double`   | `85.5`                | Decimal/floating-point     |
+| `decimal`  | `Decimal128("99.99")` | High-precision decimal     |
+| `boolean`  | `true`                | True/false                 |
+| `date`     | `ISODate(...)`        | Date/time                  |
+| `objectId` | `ObjectId(...)`       | Unique document identifier |
+| `array`    | `["JS", "Node"]`      | Multiple values            |
+| `object`   | `{city: "Nepalgunj"}` | Nested document            |
+| `null`     | `null`                | No value                   |

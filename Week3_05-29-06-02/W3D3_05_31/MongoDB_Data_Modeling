@@ -1,0 +1,91 @@
+# MongoDB Data Modelling
+Data modelling means deciding how data should be structured and stored in MongoDB.
+Unlike SQL databases, MongoDB stores data as documents rather than rows.
+* When designing a database, we need to decide: Should related data be stored inside the same document or in another collection?
+* This leads to two major approaches: 
+Embedding
+    ↓
+Store related data inside the document
+
+Referencing
+    ↓
+Store related data in another collection
+
+# Embedding
+{
+  name: "Kamal",
+  age: 23,
+  address: {
+    city: "Mahendranagar",
+    country: "Nepal"
+  }
+}
+
+# When to use Embedding
+
+Generally useful when:
+* Data is closely related.
+* Data is usually accessed together.
+* The embedded data doesn't grow without reasonable limits.
+* You want fewer database queries.
+
+# Referencing
+// students
+{
+  _id: 1,
+  name: "Kamal",
+  courseId: 101
+}
+// courses
+{
+  _id: 101,
+  name: "Computer Engineering"
+}
+
+# When to use Referencing
+
+Generally useful when:
+* Related data is large or frequently changing.
+* The related data is shared by many documents.
+* The relationship is complex.
+* Separating collections makes the data easier to manage.
+
+# Schema Validation
+MongoDB is flexible by default, meaning documents in the same collection don't necessarily need identical fields or types.
+For example, these could both be inserted:
+{
+  name: "Kamal",
+  age: 23
+}
+{
+  name: "Ram",
+  age: "twenty-three"
+}
+That flexibility is useful, but sometimes we need to enforce rules.
+Schema validation allows us to specify rules that documents must follow.
+MongoDB commonly uses $jsonSchema for this.
+
+
+# Basic Structure 
+{
+  $jsonSchema: {
+    bsonType: "object",
+    required: ["name", "age"],
+    properties: {
+      name: {
+        bsonType: "string"
+      },
+      age: {
+        bsonType: "int"
+      }
+    }
+  }
+}
+
+Here:
+
+bsonType: "object" → document must be an object
+required → fields that must exist
+properties → rules for individual fields
+bsonType: "string" → field must contain a string
+bsonType: "int" → field must contain an integer
