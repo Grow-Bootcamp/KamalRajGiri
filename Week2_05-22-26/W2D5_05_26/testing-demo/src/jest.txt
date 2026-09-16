@@ -1,0 +1,11 @@
+Jest assertions
+
+Some important Jest matchers:
+
+expect(value).toBe(10); // exact equility
+expect(value).toEqual(object); // deep equality for object and array 
+expect(value).toBeTruthy(); // checks truthy value 
+expect(value).toBeFalsy(); // check falsy value
+expect(array).toContain("JavaScript"); // Checks wether an array contains something
+expect(value).toBeDefined(); // checks value is not undefined
+

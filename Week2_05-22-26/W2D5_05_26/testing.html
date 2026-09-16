@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing</title>
+</head>
+<body>
+    <h2>Testing</h2>
+    <p>This is a simple test page.</p>
+    <h3>Unit Testing</h3>
+    <p>Unit testing is a software testing method that involves testing individual units or components of a program to ensure they function correctly. Usually  they could be functions, methods, or classes or small modules.</p>
+    <p><strong>Does this individual piece of logic behave correctly?</strong>
+    <br>
+    this doesnot involve database , real browser, frontend, External API etc so it is fast , focused , easier to debug, and good for business logic. It is usually done by developers and can be automated using testing frameworks like Jest, Mocha, or Jasmine for JavaScript, JUnit for Java, or PyTest for Python.
+</p>
+<h3>Integration Testing</h3>
+    <p>A unit test might test the controller logic in isolation. But an integration testing may ask <strong>Do these components work correctly together?</strong> <br> here unit testing are done and those are kept together and tested as a group. It is usually done by developers or QA engineers and can be automated using testing frameworks like Selenium, Cypress, or TestCafe for web applications.
+    </p>
+    <h3>End-to-End Testing</h3>
+    <p>
+        E2E testing looks at the system from the user's perspective. It tests the entire application flow, from start to finish, to ensure that all components work together as expected. E2E tests simulate real user scenarios and interactions with the application, including frontend, backend, and external services. It is usually done by QA engineers and can be automated using testing frameworks like Cypress, Selenium, or Playwright.
+        <br><strong>Can the complete system perform the user's intended workflow?</strong>
+    </p>
+
+
+
+    <h4> Assertion</h4>
+    <p>An assertion is a statement that says: <strong> "I expect this result to be true."</strong> In testing, assertions are used to verify that the actual output of a piece of code matches the expected output. If the assertion fails, it indicates that there is a bug or an issue in the code being tested. Assertions are commonly used in unit tests, integration tests, and end-to-end tests to validate the correctness of the code and ensure that it behaves as intended.
+<br>
+so conceptually:
+<pre>
+    Test
+ │
+ ├── Arrange → prepare data
+ │
+ ├── Act → execute function
+ │
+ └── Assert → verify result
+
+</pre>
+
+
+
+</p>
+<p>
+    There are several ways we can approach testing 
+    <ul>
+        <li>Manual Testing : Developer does manual testing.</li>
+        <li>Automated Testing : Code automatically checks the appliation. eg npm test</li>
+        <li>Black-box Testing : We test the system without caring about its internal implemantation.we care about  <strong>input => output</strong> </li>
+        <li>White-box Testing : We know the international implementation and test specific logic. </li>
+    </ul>
+</p>
+<p> JS testing Ecosystem
+    <ul>
+        <li>Jest</li>
+        <li>Supertest</li>
+        <li>Mocha</li>
+        <li>Chai</li>
+        <li>Playwright</li>
+    </ul>
+</p>
+    <script>
+        console.log("Testing script is running.");
+        function calculateTotal(price, quantity) {
+            return price * quantity;
+        }
+
+        // unit testing tests a isolated piece of code, like a function or a module, to ensure it behaves as expected.
+        console.log("Testing calculateTotal function:");
+        console.log(calculateTotal(10, 5)); // Should output 50
+        console.log(calculateTotal(15, 3)); // Should output 45
+    </script>
+</body>
+</html>

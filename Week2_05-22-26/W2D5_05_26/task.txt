@@ -1,0 +1,22 @@
+Understand the importance of testing in backend applications and get hands-on exposure to common JavaScript testing libraries.
+
+Scope
+
+Study the importance of testing in backend applications.
+Study different types of testing (unit, integration, end-to-end, etc.).
+Study an overview of testing methods and libraries.
+Explore Jest, Supertest, Mocha/Chai, and other relevant testing libraries.
+
+Document the day's key learnings, findings, and code snippets in a dedicated learning-log file (Markdown/Doc) and commit it to the repository.
+Raise a GitHub Pull Request for the day's practice code/work and send it to your mentor for review.
+
+Acceptance Criteria
+
+Can explain the difference between unit, integration, and end-to-end testing.
+Can write at least one working unit test using Jest (or Mocha/Chai).
+Can write at least one API test using Supertest.
+Can explain when to use each testing library explored.
+
+A daily learning-log file capturing the day's topics and key takeaways is created/updated and committed to the repository.
+A GitHub PR is raised for the day's work and sent to the mentor for review.
+The learning-log file link and the PR link are both posted in the Zoho task's comment section and in the corresponding Microsoft Teams comment/thread.
