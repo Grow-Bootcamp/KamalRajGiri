@@ -3,7 +3,7 @@ npm install
 npm start
 
 docker build -t docker-demo .
-
+<!-- Built  -->
 docker run -p 3000:3000 docker-demo
 
 visit: 

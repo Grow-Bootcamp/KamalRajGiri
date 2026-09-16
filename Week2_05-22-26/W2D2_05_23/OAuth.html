@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth Demo</title>
+</head>
+<body>
+    <h1>OAuth(Open Authorization) Demo</h1>
+    <p>This is a simple OAuth demo application.</p>
+    <p>We built an application and we want user to be able to click Continue with google to authenticate.This will allow users to log in using their Google accounts. this requires user to ask for gmail account and password but our application would have the user's google password.This is bad idea  our application should never need to know users google password . OAuth solves this problem.
+    </p>
+    OAuth is an open standard for access delegation, commonly used as a way to grant websites or applications limited access to a user's information without exposing their credentials. It allows users to authorize third-party applications to access their resources on other services (like Google, Facebook, etc.) without sharing their passwords.
+
+    <H3>Important Termonology</H3>
+    <ul>
+        <li>Resource Owner: The user who authorizes an application to access their account.</li>
+        <li>Client: The application that wants to access the user's account.</li>
+        <li>Resource Server: The server hosting the user's account (e.g., Google).</li>
+        <li>Authorization Server: The server that authenticates the user and issues access tokens.</li>
+        <li>Access Token: A token that the client uses to make API requests on behalf of the user.</li>
+        <li>Refresh Token: A token used to obtain a new access token without requiring the user to re-authenticate.</li>
+
+        <p>The refresh token is used to obtain a new access token when the current one expires and access token is use to access the user's resources.</p>
+    </ul>
+
+    <script>
+        async function refreshAccessToken() {
+            const res = await fetch ('https://oauth2.googleapis.com/token', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    client_id: process.env.CLIENT_ID,
+                    client_secret: process.env.CLIENT_SECRET,
+                    refresh_token: process.env.REFRESH_TOKEN,
+                    grant_type: 'refresh_token',
+                }),
+            });
+            if (!res.ok) throw new Error("Refresh failed - User must login again");
+            return res.json(); // Returns new access token
+        }
+        refreshAccessToken().then(data => {
+            console.log('New Access Token:', data.access_token);
+        }).catch(error => {
+            console.error(error);
+        });
+    </script>
+
+
+</body>
+</html>

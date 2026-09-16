@@ -11,6 +11,5 @@ export function isValidExpense(title, amount, category) {
     if (category.trim() === "") {
         return false;
     }
-
     return true;
 }

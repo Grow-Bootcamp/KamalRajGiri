@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cross Origin Resourse Sharing</title>
+</head>
+<body>
+    <h1>Cross Origin Resourse Sharing</h1>
+    <p>It controls whether a browser allows a webpage from one origin to request resources from another origin via JavaScript.</p>
+    <p>An origin is basically : a combination of protocol, domain, and port.
+        <br>
+        for eg: http://example.com:80 is an origin, where http is the protocol, example.com is the domain and 80 is the port.
+        <br>
+        <br>
+        <p>Typically front and backend are on different origins, so CORS is needed to allow the frontend to communicate with the backend.</p>
+        <p> when we request from frontend as fetch("http://localhost:5000/api/users"); to the backend , the browser will check if the request is allowed by the CORS policy or not . If the request is not allowed, the browser will block it and the frontend will not be able to communicate with the backend.</p>
+        <strong> CORS is mainly a browser security mechanism. It doesnot mean backend cannot recieve the request , it means the browser will block the request if it is not allowed by the CORS policy. i.e. unless the server explicitly allows the request, the browser will block it.</strong>
+    </p>
+</body>
+</html>
