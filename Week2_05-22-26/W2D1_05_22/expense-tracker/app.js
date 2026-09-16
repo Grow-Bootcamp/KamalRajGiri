@@ -80,5 +80,4 @@ expenseForm.addEventListener("submit", async function (event) {
 });
 
 // Run when page loads
-
 loadExpenses();

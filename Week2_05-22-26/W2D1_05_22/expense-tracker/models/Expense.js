@@ -20,5 +20,4 @@ export class Expense {
 //     300,
 //     "Food"
 // );
-
 // console.log(expense.getInfo());

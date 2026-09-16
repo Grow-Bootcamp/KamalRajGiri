@@ -146,12 +146,20 @@
     // 200 : when the request is successful and the server returns the requested data.
     // 201 : when a new resource is successfully created on the server.
     // 204 : when the request is successful, but there is no content to return.
+
+
+    // 301 : when the requested resource has been permanently moved to a new location.
+    // 302 : when the requested resource has been temporarily moved to a new location.
+    // 304 : when the requested resource has not been modified since the last request.
+
     // 400 : when the server cannot process the request due to a client error (e.g., invalid input).
     // 401 : when the client is not authenticated and needs to provide valid credentials.
     // 403 : when the client is authenticated but does not have permission to access the requested resource.
     // 404 : when the requested resource is not found on the server.
     //409 : when there is a conflict with the current state of the resource (e.g., trying to create a resource that already exists).
     // 422 : when the server understands the request but cannot process it due to semantic errors (e.g., validation errors).
+
+    
     // 500 : when the server encounters an unexpected error while processing the request (e.g., a server-side error).
     //502 : when the server acts as a gateway or proxy and receives an invalid response from the upstream server.
     // 503 : when the server is temporarily unavailable (e.g., due to maintenance or overload).

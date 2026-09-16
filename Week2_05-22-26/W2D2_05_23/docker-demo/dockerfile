@@ -6,7 +6,7 @@ COPY package*.json ./
 #Copy the package.json and package-lock.json files to the working directory
 RUN npm install
 #Install the dependencies specified in package.json
-COPY . .
+COPY . . 
 #Copy the rest of the application code to the working directory
 EXPOSE 3000
 #Expose port 3000 for the application to listen on
