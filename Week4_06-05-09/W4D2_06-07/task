@@ -1,0 +1,14 @@
+# Week 4:Day 1:MongoDB with Mongoose - CRUD Operations
+# DESCRIPTION
+Learn how to use Mongoose as an ODM for MongoDB, focusing on CRUD operations and schema design with validation.
+# SCOPE
+•    Study MongoDB CRUD operations (Create, Read, Update, Delete) using Mongoose.
+•    Study Mongoose schema design and validation techniques.
+•    Document the day's key learnings, findings, and code snippets in a dedicated learning-log file (Markdown/Doc) and commit it to the repository.
+•    Raise a GitHub Pull Request for the day's practice code/work and send it to your mentor for review.
+# Acceptance Criteria
+✓    Can perform CRUD operations on a MongoDB collection using Mongoose.
+✓    Can define a Mongoose schema with appropriate validation rules (required, min/max, custom validators).
+✓    A daily learning-log file capturing the day's topics and key takeaways is created/updated and committed to the repository.
+✓    A GitHub PR is raised for the day's work and sent to the mentor for review.
+✓    The learning-log file link and the PR link are both posted in the Zoho task's comment section and in the corresponding Microsoft Teams comment/thread.
