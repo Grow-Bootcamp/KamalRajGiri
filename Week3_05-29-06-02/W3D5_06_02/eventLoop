@@ -1,0 +1,80 @@
+# Node.js Event Loop
+* imagine our backend recieves output as Client => GET /users => Node.js => read Users from database
+reading from a database, file, network, etc can take time. 
+If Node.js simply waited then one slow operation could hold up other work.
+* Node.js insteadworks approximately like Request => Start I/O operation => Dont wait => continue handling other work => I/O completes => Callback become ready => Event loop executes callback
+
+this is the foundation of non-blocking I/O.
+
+* Node.js does not create a new JavaScript thread for every request. Instead, asynchronous operations can be handled outside the main JavaScript execution flow, and their callbacks are later scheduled for execution. So Node.js can handle many I/O-heavy operations without blocking the JavaScript thread.
+
+# Synchronous vs Asynchronous
+Synchronous : One operation waits for another.
+Asynchronous : An operation starts, and Node.js can continue doing other work.
+
+# Event Loop 
+Once your initial synchronous JavaScript has executed, Node.js enters the event loop.
+
+Your provided resource identifies six phases:
+
+             ┌──────────────┐
+             │    Timers    │
+             └──────┬───────┘
+                    ↓
+        ┌─────────────────────┐
+        │ Pending Callbacks   │
+        └──────────┬──────────┘
+                   ↓
+        ┌─────────────────────┐
+        │   Idle / Prepare    │
+        └──────────┬──────────┘
+                   ↓
+        ┌─────────────────────┐
+        │        Poll         │
+        └──────────┬──────────┘
+                   ↓
+        ┌─────────────────────┐
+        │        Check        │
+        └──────────┬──────────┘
+                   ↓
+        ┌─────────────────────┐
+        │   Close Callbacks   │
+        └──────────┬──────────┘
+                   │
+                   └──────→ repeat
+
+# Timers 
+Handels callbacks associated with setTimeout() , setInterval()
+This means the callback becomes eligible after the delay.
+
+# Pending Callback
+Handles certain callbacks deferred from previous operations.
+You don't normally interact with this phase directly when learning everyday Node.js.
+
+# Idle/Prepare
+This is mainly for Node.js's internal operations. We generally don't write application  code specially for this phase.
+
+# Poll
+This is very important phase. It deals with I/O-related work.
+
+Examples:
+File operation completed
+Network data arrived
+Database-related I/O completed
+
+This is one of the reasons Node.js works well for I/O-heavy applications.
+
+# Check
+This is where setImmediate() callbacks execute.
+
+# Close Callbacks
+Handle close-related callbacks. For example: socket.on('close', ...)
+
+# But where are Promises?
+The six phases are not the whole story. There are also microtasks. 
+process.nextTick()
+Promise.then()
+Promise.catch()
+Promise.finally()
+
+process.nextTick() have higher priority than Promise microtasks.
