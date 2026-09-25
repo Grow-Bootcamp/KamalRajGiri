@@ -1,0 +1,91 @@
+# What is a template engine?
+A template engine allows the server to generate dynamic HTML by combining: 
+HTML template + Data
+        ↓
+   Generated HTML
+        ↓
+      Browser
+
+instead of hard coding `<h1>Welcome, Kamal</h1>` we can have a template containing a variable `<h1>Welcome, <%= name %></h1>` and express can provide 
+{
+    name: 'Kamal'
+}
+the template engine combines them to produce final HTML.
+
+# Why use a template engine
+Template engines are useful when the server needs to render HTML containing dynamic information. common examples includes User profiles, Dashboards, Product pages, Reports 
+Popular Node.js template engines includes : EJS, Pug, Handlebars
+
+# npm Package Versioning & Semantic Versioning
+* Why package versoning matters
+`npm install express` npm records the dependency in package.json 
+{
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
+
+the verson has three parts `MAJOR.MINOR.PATCH`. eg  `5.2.1`
+This is called Semantic Versioning (SemVer).
+
+* Semantic Versoning
+The general format is MAJOR.MINOR.PATCH
+
+Major: 5.x.x -> 6.x.x : usually indicates potentially breaking changes.
+
+Minor: 5.2.x -> 5.3.x : Adds functionality while maintaining compatibility according to SemVer conventions.
+
+Patch: 5.2.1 -> 5.2.2 : Typically contains bug fixex.
+
+* Exact version
+`"express": "5.2.1"` : This requests exactly: 5.2.1 version, No automatic version range is specified.
+
+* Caret ^ :  Compatible updates within major
+`"express": "^5.2.1"` : The caret generally allows compatible updates within the same major version.
+Conceptually ^5.2.1 allows 5.x.x but not 6.0.0
+
+* Tilde ~ : Patch updates within minor
+`"express": "~5.2.1"` : The tilde generally allows patch-level updates within the same minor version.
+Conceptually ~5.2.1 can allow 5.2.x but not 5.3.0
+
+
+* package.json
+It describes your project and its dependencies. 
+{
+  "name": "template-engine",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.2.1"
+  }
+}
+
+* package-lock.json
+When npm installs dependencies, it creates: `package-lock.json` his records the resolved dependency versions and dependency tree.
+
+* So there is an important distinction:
+package.json
+     ↓
+What dependency/version range does the project request?
+
+package-lock.json
+     ↓
+What exact dependency versions were resolved?
+
+
+# npm install vs npm update
+* `npm install` : Installs dependencies according to the project's dependency definitions and lock file.
+* `npm update` : Attempts to update installed dependencies within the allowed version ranges.
+
+
+`npm list --depth=0` : cmd to see installed package.
+`npm outdated` : This shows information about installed/current/latest versions when available.
+
+* package.json defines project dependencies and version ranges, while package-lock.json records the resolved dependency versions and dependency tree.
+
+* Semantic versioning follows MAJOR.MINOR.PATCH. The caret ^ generally permits compatible updates within the same major version, while ~ generally permits patch-level updates within the same minor version.
+
