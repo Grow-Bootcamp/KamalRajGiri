@@ -21,4 +21,3 @@ committed to the repository.
 ● A GitHub PR is raised for the day's work and sent to the mentor for review.
 ● The learning-log file link and the PR link are both posted in the Open Project task's comment section and in
 the corresponding Microsoft Teams comment/thread.
-
