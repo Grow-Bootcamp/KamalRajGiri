@@ -1,7 +1,7 @@
 # Learning Log: ACID, Transactions, Indexing, and a Bank-Transfer API
 
-**Date:** 20 June 2023
-**Week/Day:** Week 6, Day 2
+**Date:** 07 October 2026
+**Week/Day:** Week 5, Day 4
 **Focus:** ACID transactions, indexing, and implementing a bank-transfer workflow with TypeScript, Express, Sequelize, and MySQL
 
 ## What I set out to learn
