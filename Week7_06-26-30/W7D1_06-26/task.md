@@ -19,7 +19,3 @@ committed to the repository.
 ● The learning-log file link and the PR link are both posted in the Zoho task's comment section and in
 the corresponding Microsoft Teams comment/thread.
 
-
-
-
-lets go for this as usual , logically conceptually and focusing practically coding snippts and complete as a mini project , understanding why how when where what if what if not what if changed bit and so on , additionally i will give you a refrence note which we will cover and go ahead  but not limit to it we will go beyond it and make sure we will complete it and finish another day task as well with it so lets move quickly without skipping any thing   
