@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Foundations - Bonus</title>
+  <link rel="stylesheet" href="bonos.css">
+  <script src="bonos.js" defer></script>
+</head>
+<body>
+  <header class="hero">
+    <p class="eyebrow">HTML + CSS + JavaScript</p>
+    <h1>JavaScript Foundations</h1>
+    <p>Lesson 1: Equality and Truthiness</p>
+    <p>Lesson 2: slice() vs splice()</p>
+  </header>
+
+  <main class="container">
+
+    <!-- LESSON 1: EQUALITY -->
+    <section class="panel">
+      <h2>1. Equality: == vs ===</h2>
+
+      <p>
+        <code>==</code> allows type conversion before comparison.
+        <code>===</code> compares both type and value.
+      </p>
+
+      <div class="example-grid">
+        <div class="example">
+          <span class="label">"10" == 10</span>
+          <strong id="loose-result">Click Run Examples</strong>
+        </div>
+
+        <div class="example">
+          <span class="label">"10" === 10</span>
+          <strong id="strict-result">Click Run Examples</strong>
+        </div>
+
+        <div class="example">
+          <span class="label">0 || 50</span>
+          <strong id="or-result">Click Run Examples</strong>
+        </div>
+
+        <div class="example">
+          <span class="label">0 ?? 50</span>
+          <strong id="nullish-result">Click Run Examples</strong>
+        </div>
+      </div>
+
+      <button id="equality-button" type="button">
+        Run Examples
+      </button>
+    </section>
+
+    <!-- LESSON 1: TRUTHY AND FALSY -->
+    <section class="panel">
+      <h2>2. Truthy and Falsy Values</h2>
+
+      <p>
+        Values such as <code>0</code>, <code>""</code>,
+        <code>false</code>, <code>null</code>, and
+        <code>undefined</code> are falsy.
+      </p>
+
+      <p>
+        Non-empty strings, including <code>"0"</code>,
+        and empty arrays <code>[]</code> are truthy.
+      </p>
+
+      <button id="truthy-button" type="button">
+        Check Values
+      </button>
+
+      <ul id="truthy-results" class="result-list" aria-live="polite">
+        <li>Click the button to see the results.</li>
+      </ul>
+
+      <p class="note">
+        CSS comparison:
+        <code>.button</code> selects an element by class.
+        <code>:disabled</code> is a CSS pseudo-class.
+        In JavaScript, <code>button.disabled</code> accesses a property.
+      </p>
+    </section>
+
+    <!-- LESSON 2: SLICE AND SPLICE -->
+    <section class="panel">
+      <h2>3. slice() vs splice()</h2>
+
+      <p>
+        <code>slice(start, end)</code> returns a selected portion
+        without changing the original array. The end index is excluded.
+      </p>
+
+      <p>
+        <code>splice(start, deleteCount, ...items)</code> modifies
+        the original array. It can remove, insert, or replace elements.
+      </p>
+
+      <div class="array-demo">
+        <div class="example">
+          <h3>slice(1, 3)</h3>
+          <p>Start at index 1 and stop before index 3.</p>
+
+          <button id="slice-button" type="button">
+            Run slice()
+          </button>
+
+          <pre id="slice-result" class="output">Result appears here.</pre>
+        </div>
+
+        <div class="example">
+          <h3>splice(1, 2)</h3>
+          <p>Start at index 1 and remove 2 elements.</p>
+
+          <button id="splice-button" type="button">
+            Run splice()
+          </button>
+
+          <pre id="splice-result" class="output">Result appears here.</pre>
+        </div>
+      </div>
+
+      <div class="example">
+        <h3>Insert Without Removing</h3>
+
+        <p>
+          <code>items.splice(2, 0, "X")</code>
+          inserts "X" at index 2 and removes zero elements.
+        </p>
+
+        <button id="insert-button" type="button">
+          Try Insertion
+        </button>
+
+        <pre id="insert-result" class="output">Result appears here.</pre>
+      </div>
+    </section>
+
+    <!-- SUMMARY -->
+    <section class="panel takeaways">
+      <h2>Quick Takeaways</h2>
+
+      <ul>
+        <li><code>==</code> allows type conversion; <code>===</code> is strict.</li>
+        <li><code>||</code> uses a fallback for falsy values.</li>
+        <li><code>??</code> uses a fallback only for null or undefined.</li>
+        <li><code>slice(start, end)</code> excludes the end index.</li>
+        <li><code>slice()</code> does not mutate the original array.</li>
+        <li><code>splice()</code> modifies the original array.</li>
+        <li>For React state, prefer creating a new array instead of mutating existing state.</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    JavaScript Foundations | Lessons 1–2
+  </footer>
+</body>
+</html>
