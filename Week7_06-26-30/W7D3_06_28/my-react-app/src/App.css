@@ -1,0 +1,26 @@
+
+ul {
+  list-style: circle;
+}
+
+button {
+  background: rgb(14, 220, 207);
+  color: rgb(253, 4, 4);
+  border: 2px solid red;
+  border-radius: 30px;
+  padding: 8px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.counter {
+  border: 2px dashed yellow;
+  margin: 10px;
+  padding: 10px 20px;
+}
+
+.ffruit{
+    background: rgb(238, 250, 216);
+    margin: 10px 0px;
+    padding: 1px 10px;
+}
