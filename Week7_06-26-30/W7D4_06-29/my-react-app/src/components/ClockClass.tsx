@@ -1,12 +1,14 @@
 import { Component } from 'react';
-
+type ClockClassProps = {
+    onLog: (message: string) => void;
+}
 type ClockState = {
     time: Date;
 }
 
-class ClockClass extends Component<{}, ClockState> {
+class ClockClass extends Component<ClockClassProps, ClockState> {
     private timerId: ReturnType<typeof setInterval> | undefined;
-    constructor(props: {}) {
+    constructor(props: ClockClassProps) {
         super(props);
 
         this.state = {
@@ -17,16 +19,19 @@ class ClockClass extends Component<{}, ClockState> {
     }
 
     componentDidMount() {
+        // this.props.onLog("Class Clock mounted");
+
         console.log("3. Component Did Mount");
         this.timerId = setInterval(() => {
             this.setState({ time: new Date() });
         }, 1000);
     }
-    componentDidUpdate(
-        _prevProps: Readonly<{}>, _prevState: Readonly<ClockState>) {
+    componentDidUpdate() {
+        // this.props.onLog("Class clock updated");
         console.log("4. Component Did Update");
     }
     componentWillUnmount() {
+        // this.props.onLog("Class clock unmounted");
         console.log("5. Component Will Unmount");
         if (this.timerId !== undefined) {
             clearInterval(this.timerId);
