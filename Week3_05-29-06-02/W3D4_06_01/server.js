@@ -13,7 +13,7 @@ app.get("/about", (req, res) => {
 
 app.get("/message", async (req, res) => {
     try {
-        const data = await fs.readFile("./data/message.txt", "utf-8");
+        const data = await fs.readFile("./data/message.txt", "utf-8"); // Asynchronous read : does not block the execution, returns a promise
 
         res.send(data);
     } catch (error) {
