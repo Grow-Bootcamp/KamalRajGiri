@@ -1,0 +1,154 @@
+# Mongoose
+An ODM(Object Document Mapper) library for MongoDB and Node.js.
+It provides a structured way to work with MongoDB from JavaScript.
+
+Without Mongoose, MongoDB allows flexible document structures:
+
+Student 1
+{
+    name: "Kamal",
+    age: 23
+}
+
+Student 2
+{
+    name: "Ram",
+    course: "Computer Engineering",
+    semester: 7
+}
+But application level system needs consistency.
+Mongoose allows us to define rules for how documents should look. For Example:
+
+Student
+├── name       → String, required
+├── email      → String, required, unique
+├── age        → Number, min: 16
+└── course     → String, required
+
+so mongoose provides Schema defination, Data validation, Models, CRUD helpers, Middlewares/hooks, Query building, Type casting, Better organization of mongodb code.
+
+* Mongoose doesnot replace MongoDB MongoDB is still responsible for storing data. Mongoose provide an application-level abstraction over MongoDB.
+
+# MongoDB vs Mongoose
+
+| MongoDB                   | Mongoose                         |
+| ------------------------- | -------------------------------- |
+| Database                  | ODM library                      |
+| Stores documents          | Provides structure for documents |
+| Uses collections          | Uses schemas and models          |
+| Native MongoDB operations | JavaScript-friendly methods      |
+| Flexible schema           | Schema can enforce rules         |
+| Database technology       | Node.js library                  |
+
+
+# Native MongoDB Driver vs Mongoose
+
+| Native MongoDB Driver          | Mongoose                    |
+| ------------------------------ | --------------------------- |
+| Direct MongoDB interaction     | Higher-level abstraction    |
+| Flexible structure             | Schema-based structure      |
+| Manual validation often needed | Built-in schema validation  |
+| Collections/documents          | Models/documents            |
+| Native MongoDB queries         | Mongoose query API          |
+| Less abstraction               | More abstraction            |
+| More control                   | More developer conveniences |
+| No ODM layer                   | ODM layer                   |
+
+
+# What is ODM
+Object Document Mapper
+MongoDB stores data as documents. JS works with objects. Mongoose help to map JS object to MongoDB document.
+
+# Installing Mongoose 
+`npm install mongoose`
+
+
+# What is Schema
+A schema defines the structure and rules of documents handled by Mongoose.
+
+const studentSchema = new mongoose.Schema({
+    name: String,
+    age: Number,
+    course: String
+});
+
+* A schema does not directly represent the MongoDB collection. 
+A model is created from the schema.
+
+# Schema vs Model vs Document
+Schema : What should a document look like?
+Model : How do I interact with documents in MongoDB?
+Document : An actual piece of data stored in MongoDB.
+
+# Tyes of mongoose
+String
+Number
+Boolean
+Date
+Array
+Object
+ObjectId
+
+# required : 
+makes a field mandadory, without it validation fails.
+name: {
+    type: String,
+    required: true
+}
+
+# min and max :
+Primarly used with numbers.
+age: {
+    type: Number,
+    min: 18,
+    max: 60
+}
+age : 23 is valid and age : 16 is invalid.
+
+# minlength and maxlength
+Used with string
+name: {
+    type: String,
+    minlength: 3,
+    maxlength: 50
+}
+
+# enum
+Restricts a field to a specific value 
+role: {
+    type: String,
+    enum: ["student", "staff", "admin"]
+}
+valid: Student 
+invalid : manager
+
+# Deafult Values
+We can provide a deafult values
+active: {
+    type: Boolean,
+    default: true
+}
+
+# Unique
+This is commonly used when an data should not be duplicated.
+email: {
+    type: String,
+    required: true,
+    unique: true
+}
+
+`unique: true` is not a normal Mongoose validator. 
+It is used to create a MongoDB unique index, so duplicate-key errors should still be handled at the application level.
+
+# Custom Validators
+Mongoose also allows custom validation logic.
+semester: {
+    type: Number,
+    validate: {
+        validator: function(value) {
+            return value >= 1 && value <= 8;
+        },
+        message: "Semester must be between 1 and 8"
+    }
+}
+This allows us to implement application-specific rules.

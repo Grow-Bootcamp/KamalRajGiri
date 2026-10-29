@@ -1,0 +1,27 @@
+{
+  "name": "sequelize-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^18.0.5",
+    "mysql2": "^3.24.5",
+    "sequelize": "^6.37.8"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "sequelize-cli": "^6.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}
