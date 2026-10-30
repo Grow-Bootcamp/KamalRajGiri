@@ -1,3 +1,15 @@
+#login{
+    background-color: navy;
+    color : white;
+}
+
+.button {
+  background: navy;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 
 /* GENERAL RESET */
 * {

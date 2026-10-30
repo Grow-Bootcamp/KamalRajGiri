@@ -1,0 +1,156 @@
+
+/* ---------- Global reset and theme ---------- */
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  color: #1e293b;
+  background: #f1f5f9;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+/* ---------- Main dashboard ---------- */
+main {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+  padding: 36px 0;
+}
+
+main > h1 {
+  margin: 0 0 28px;
+  color: #0f172a;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  text-align: center;
+}
+
+h2 {
+  margin-top: 0;
+  color: #334155;
+  font-size: 1.2rem;
+}
+
+/* ---------- Dashboard sections ---------- */
+main > section {
+  margin-bottom: 20px;
+}
+
+main > section,
+main > section + section {
+  padding: 22px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgb(15 23 42 / 5%);
+}
+
+/* ---------- Buttons ---------- */
+button {
+  margin: 4px 0 12px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+/* ---------- Clock and counter content ---------- */
+p {
+  line-height: 1.6;
+}
+
+main > section p {
+  margin-bottom: 0;
+  color: #475569;
+}
+
+/* ---------- User directory ---------- */
+ul {
+  padding-left: 22px;
+}
+
+li {
+  margin: 9px 0;
+  line-height: 1.5;
+}
+
+main > section li strong {
+  color: #0f172a;
+}
+
+/* ---------- Lifecycle log ---------- */
+main > section:last-of-type {
+  border-left: 4px solid #0d9488;
+}
+
+main > section:last-of-type li {
+  padding: 8px 12px;
+  overflow-wrap: anywhere;
+  background: #f0fdfa;
+  border-radius: 6px;
+  color: #115e59;
+  font-size: 0.9rem;
+}
+
+/* ---------- Loading and error feedback ---------- */
+[role="alert"] {
+  padding: 12px;
+  background: #fef2f2;
+  border-radius: 8px;
+  color: #b91c1c !important;
+}
+
+/* ---------- Responsive layout ---------- */
+@media (min-width: 760px) {
+  main {
+    padding: 48px 0;
+  }
+
+  main > section {
+    padding: 26px;
+  }
+}
+
+@media (max-width: 480px) {
+  main {
+    width: 94%;
+    padding: 24px 0;
+  }
+
+  main > section,
+  main > section + section {
+    padding: 16px;
+    border-radius: 10px;
+  }
+
+  button {
+    width: 100%;
+  }
+}
