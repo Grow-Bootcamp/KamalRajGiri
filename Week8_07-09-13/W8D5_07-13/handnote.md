@@ -1,361 +1,890 @@
-# Week 7 Day 2 — Authentication & Role-Based Authorization in React
+# Week 7 Day 2 — Authentication & Role-Based Authorization
+## Technical Handnote
 
-## 1. Objective
+## 1. Project Overview
 
-The goal of this assignment was to integrate a React TypeScript frontend with an Express TypeScript authentication backend.
+This project implements authentication and role-based authorization using:
 
-The application supports:
+- Backend: Node.js, Express, TypeScript
+- Frontend: React, TypeScript, Vite
+- Database: MySQL
+- Database driver: mysql2
+- Authentication: JSON Web Token (JWT)
+- Password security: bcrypt
+- Refresh-token security: Cryptographically random tokens and SHA-256 hashing
+- Session management: HttpOnly cookies
+- Routing: React Router
 
-- User registration and login
-- JWT-based authentication
-- Protected React routes
-- Role-based authorization
-- Access-token expiration and refresh
-- Refresh-token rotation and logout revocation
-- Session restoration after browser reload
-- Role-aware navigation and admin-only access
+The original backend used in-memory Maps to store users and refresh-token records. We migrated this storage to MySQL so that application data and sessions persist even after the backend restarts.
 
-## 2. Authentication vs. Authorization
+The existing authentication and authorization logic was preserved during the migration.
 
-**Authentication** answers: Who is the user?
+---
 
-The user provides credentials. The backend verifies the email and password and issues an access token.
-
-**Authorization** answers: What is the authenticated user allowed to do?
-
-The backend checks the user's role and permissions before granting access to a protected resource.
-
-Example:
-
-- A normal user can access `/dashboard`.
-- An admin can access `/dashboard` and `/admin`.
-- An unauthenticated visitor must log in before accessing protected routes.
-
-Authentication must happen before role-based authorization.
-
-
-## 2. Authentication vs. Authorization
+## 2. Authentication vs Authorization
 
 These two terms are related, but they solve different problems.
 
-Authentication = Who are you?
+### Authentication = Who are you?
 
 Authentication verifies a user's identity.
 
-The user provides credentials. The backend verifies the email and password and issues an access token.
+For example:
+- A user submits an email and password.
+- The backend retrieves the user from MySQL.
+- bcrypt compares the submitted password with the stored password hash.
+- If valid, the backend issues authentication tokens.
 
-Authorization = What are you allowed to do?
+### Authorization = What are you allowed to do?
 
-Authorization determines what an authenticated user is allowed to access. The backend checks the user's role and permissions before granting access to a protected resource.
+Authorization determines which resources and operations an authenticated user can access.
 
-Example:
+Our application uses three roles:
 
-- A normal user can access `/dashboard`.
-- An admin can access `/dashboard` and `/admin`.
-- An unauthenticated visitor must log in before accessing protected routes.
+- user
+- moderator
+- admin
 
-Authentication must happen before role-based authorization.
+For example:
+- A normal user can access the dashboard.
+- An admin can access the dashboard and admin-protected functionality.
+- A normal user cannot access admin-only backend endpoints.
 
-Frontend — User experience
+### Frontend vs Backend Security
 
-- Hide unavailable buttons.
+Frontend responsibilities:
+- Hide unavailable navigation links.
 - Redirect unauthenticated visitors.
-- Display only permitted navigation links.
+- Display role-specific UI.
 - Show unauthorized messages.
 
-Backend — Actual security
-
+Backend responsibilities:
 - Verify JWT signatures and expiration.
 - Identify the authenticated user.
 - Verify roles and permissions.
 - Reject unauthorized API requests.
 
-Golden rule: Frontend authorization is not a security boundary. Backend authorization is mandatory.
+**Golden rule:** Frontend authorization is not a security boundary. Backend authorization is mandatory.
 
-One important detail: checking whether a token exists is not equivalent to proving that it is valid.
+Checking whether a token exists is not equivalent to proving that it is valid. The backend must verify the token before granting access to protected resources.
 
-The backend must verify the token when the frontend requests protected resources.
+---
 
-## 3. JWT Access Tokens
+## 3. Password Hashing with bcrypt
 
-JWT means JSON Web Token. It is a compact token format commonly used to carry claims between a client and server.
-
-A JWT has three sections:
-
-1. Header — describes the token type and signing algorithm.
-2. Payload — contains claims such as the subject (`sub`) and role.
-3. Signature — allows the backend to verify that the token has not been altered.
-
-The sections are separated by periods:
-
-`header.payload.signature`
-
-The backend signs access tokens using HS256 and the configured `JWT_SECRET`.
-
-The token includes the user's ID and role and expires after 15 minutes.
-
-**Important:** A signed JWT is not automatically encrypted. Its payload can generally be decoded by anyone holding the token. Never put passwords or other secrets in the payload.
-
-The backend must verify the signature, algorithm, and expiry before trusting the claims.
-
-## 4. Password Hashing with bcrypt
-
-Passwords must not be stored as plain text.
+Passwords should never be stored as plain text.
 
 During registration:
 
-1. Validate the submitted fields.
-2. Normalize the email.
-3. Hash the password with bcrypt.
-4. Store the password hash with the user record.
+1. The user submits a password.
+2. bcrypt hashes the password.
+3. The resulting hash is stored in the database.
+4. The original password is not stored.
 
-During login, bcrypt compares the submitted password with the stored hash.
+During login:
 
-The application never needs to decrypt the password hash.
+1. The backend retrieves the user using their email.
+2. bcrypt compares the submitted password with the stored hash.
+3. If the comparison succeeds, authentication continues.
 
-Public API responses omit `passwordHash`.
+Important distinction:
 
-## 5. Access Tokens vs. Refresh Tokens
+- Hashing is a one-way process.
+- Encryption is designed to be reversible using the appropriate key.
+- Password verification uses bcrypt comparison, not password decryption.
 
-### Access token
+The database column is named `password_hash`.
 
-- A signed JWT.
-- Short-lived, with a 15-minute expiry in this project.
-- Sent to protected API endpoints in the `Authorization: Bearer <token>` header.
-- Kept in React memory rather than localStorage.
+---
 
-### Refresh token
+## 4. JWT Authentication
 
-- A cryptographically random opaque token, not a JWT.
-- Has a seven-day lifetime in this project.
-- Sent by the browser in an HttpOnly cookie.
-- Stored in the backend repository as a SHA-256 hash rather than as the raw token.
-- Used to obtain a new access token when the application restores a session.
+JWT stands for JSON Web Token.
 
-The access token is used for API authorization. The refresh token is used to obtain new access credentials.
+It allows the backend to issue a signed token representing an authenticated user.
 
-## 6. Refresh-Token Hashing
+A JWT has three sections:
 
-The backend generates a random refresh token using Node.js cryptographic randomness.
+1. Header
+2. Payload
+3. Signature
 
-It calculates a SHA-256 hash before storing the token record.
+They are separated by dots:
+
+header.payload.signature
+
+### Header
+
+Contains token metadata, including the signing algorithm.
+
+### Payload
+
+Contains claims about the authenticated user.
+
+Our authentication flow uses the user's ID and role in the token payload.
+
+For example, the conceptual payload is:
+
+- sub: user ID
+- role: user's role
+
+### Signature
+
+The signature allows the backend to verify that the token was signed using the expected secret and has not been modified.
+
+A signed JWT is not automatically encrypted. Its payload should not contain passwords or other secrets.
+
+### Access Token
+
+The access token:
+
+- Is used to access protected API endpoints.
+- Is sent through the Authorization header.
+- Uses the Bearer authentication scheme.
+- Has a configured lifetime of 15 minutes in this project.
+
+Example header:
+
+Authorization: Bearer ACCESS_TOKEN
+
+The backend verifies the token before allowing access to protected routes.
+
+---
+
+## 5. Access Token vs Refresh Token
+
+Our implementation uses two different tokens.
+
+### Access Token
+
+Purpose:
+- Authorize API requests.
+- Provide short-lived authenticated access.
+
+Characteristics:
+- JWT.
+- Short lifetime: 15 minutes.
+- Kept in React application memory.
+- Sent through the Authorization header.
+
+### Refresh Token
+
+Purpose:
+- Obtain a new access token after the access token expires.
+- Restore an existing session when the frontend application starts.
+
+Characteristics:
+- Opaque, cryptographically random token.
+- Not a JWT.
+- Stored in an HttpOnly cookie.
+- Has a configured lifetime of 7 days.
+- Its SHA-256 hash is stored in MySQL.
+
+The browser sends the refresh-token cookie to the backend when making eligible requests.
+
+JavaScript cannot directly read an HttpOnly cookie.
+
+---
+
+## 6. Why We Use Two Tokens
+
+Using a short-lived access token reduces the period during which an exposed access token can be used.
+
+The refresh token allows the user to continue their session without entering credentials every time the access token expires.
+
+The two tokens have different responsibilities:
+
+Access token = API access.
+
+Refresh token = obtain a new access token.
+
+The refresh token is more sensitive because it can be used to obtain new access tokens. Therefore, we store only its hash in the database and use an HttpOnly cookie for browser transport.
+
+---
+
+## 7. Refresh Token Generation and Hashing
+
+Our refresh-token implementation follows this process:
+
+1. Generate a cryptographically random token.
+2. Return the original token through an HttpOnly cookie.
+3. Calculate its SHA-256 hash.
+4. Store the hash, user ID, and expiration timestamp in MySQL.
 
 Conceptually:
 
-`raw token → SHA-256 hash → repository`
+Original refresh token
+        |
+        v
+    SHA-256
+        |
+        v
+   Token hash
+        |
+        v
+  MySQL database
 
-When a refresh request arrives, the backend hashes the cookie value and looks up the matching record.
+The original refresh token is not stored in the database.
 
-Storing only the hash reduces the impact of someone obtaining the repository contents. A real production system still needs secure persistent storage, access controls, and revocation procedures.
+When the browser later sends the original token:
 
-## 7. Refresh-Token Rotation
+1. The backend hashes the received token.
+2. It searches MySQL using that hash.
+3. It checks whether the record exists and is still valid.
+4. It verifies the associated user.
+5. It issues a new access token if validation succeeds.
 
-Rotation replaces the refresh token after a successful refresh.
+---
 
-The implemented flow is:
+## 8. Refresh Token Rotation
 
-1. The browser sends its refresh cookie to `/api/auth/refresh`.
-2. The backend hashes the token and finds its record.
-3. The backend verifies that the record exists and has not expired.
-4. The backend retrieves the corresponding user.
-5. The old token record is deleted.
-6. A new access token and refresh token are generated.
-7. The new refresh-token hash is stored.
-8. The new refresh token is returned through the cookie; the access token and user are returned in JSON.
+Refresh-token rotation means replacing an existing refresh token with a new one whenever the refresh endpoint successfully processes it.
 
-An expired, unknown, or invalid refresh token is rejected.
+Our implementation:
 
-Production systems should use atomic database operations or transactions and consider refresh-token reuse detection to handle concurrent requests safely.
+1. Browser sends the existing refresh token.
+2. Backend calculates its SHA-256 hash.
+3. Backend searches for the corresponding database record.
+4. Backend validates the token and its expiration.
+5. Backend removes the old refresh-token record.
+6. Backend generates a new refresh token.
+7. Backend stores the new token's hash.
+8. Backend issues a new access token.
+9. Backend sends the new refresh token through the HttpOnly cookie.
 
-## 8. HttpOnly Cookies
+Conceptually:
 
-The refresh token is set using an HttpOnly cookie.
+Old refresh token
+        |
+        v
+Validate old token
+        |
+        v
+Delete old token record
+        |
+        v
+Generate new refresh token
+        |
+        v
+Store new token hash
+        |
+        v
+Issue new access token
 
-Relevant options:
+The previous refresh token becomes invalid after successful rotation.
 
-- `httpOnly: true` — prevents ordinary frontend JavaScript from reading the cookie.
-- `secure` — requires HTTPS when enabled for production.
-- `sameSite: 'lax'` — provides a degree of cross-site request protection.
-- `path: '/api/auth'` — limits the paths where the browser sends the cookie.
-- `maxAge` — sets the cookie lifetime.
+This limits the usefulness of a previously issued refresh token.
 
-The frontend uses `credentials: 'include'` so browser requests can include the cookie.
+---
 
-The backend CORS configuration allows the frontend origin and credentials. The backend also uses `cookie-parser` to read incoming cookies.
+## 9. Logout and Refresh Token Revocation
 
-HttpOnly cookies do not eliminate every browser security risk. Production deployment also requires appropriate CSRF protection, HTTPS, and careful origin configuration.
+Logout must invalidate the refresh-token session.
 
-## 9. Login Flow
+Our logout implementation:
 
-1. The user submits an email and password.
-2. The frontend calls `/api/auth/login`.
-3. The backend validates the input.
-4. The backend finds the user and verifies the password using bcrypt.
-5. The backend generates an access token and refresh token.
-6. The backend stores the refresh-token hash.
-7. The raw refresh token is set in an HttpOnly cookie.
-8. The JSON response contains the access token and public user, not the raw refresh token.
-9. React stores the user and access token in context state.
+1. Receives the refresh-token cookie.
+2. Hashes the original refresh token.
+3. Finds the corresponding record in MySQL.
+4. Deletes the record.
+5. Clears the refresh-token cookie.
 
-## 10. Session Restoration
+After deletion, the old refresh token cannot be used to obtain another access token.
 
-React state held only in memory disappears when the browser page reloads.
+The database operation is important because deleting a browser cookie alone does not revoke a token that might have been copied earlier.
 
-The application solves this by requesting `/api/auth/refresh` when the `AuthProvider` starts.
+---
 
-The initial state is:
+## 10. React Authentication Context
 
-- `user = null`
-- `accessToken = null`
-- `isLoading = true`
+The frontend uses React Context to share authentication state across components.
 
-The startup effect requests a refresh. On success, it stores the returned user and access token in React state.
+The AuthContext provides shared information such as:
 
-On failure, the application treats the user as logged out.
+- Current user
+- Access token
+- Loading state
+- Login functionality
+- Logout functionality
 
-Finally, it sets `isLoading` to `false`, allowing route guards to make a decision.
+The AuthProvider wraps the application so that components can access authentication state without passing props through every component.
 
-The refresh token itself is not read by React; the browser manages the HttpOnly cookie.
+### Why use Context?
 
-## 11. React Context
+Without Context, authentication information would need to be passed through multiple component levels.
 
-`AuthContext` shares authentication state and functions with components throughout the application.
+Context makes shared authentication state accessible throughout the component tree.
 
-The context exposes:
+### Why keep the access token in memory?
 
-- `user`
-- `accessToken`
-- `isLoading`
-- `login()`
-- `logout()`
+Our implementation keeps the access token in React memory rather than localStorage.
 
-`AuthProvider` wraps the application. Components call `useAuth()` to access the shared state.
+This means the token is not intentionally persisted in browser local storage.
 
-This avoids passing authentication props manually through every component.
+When the application reloads, the frontend restores the session using the refresh-token cookie.
 
-## 12. React useEffect and Strict Mode
+---
 
-`useEffect` runs the session-restoration logic after React renders.
+## 11. Restoring Authentication on Application Startup
 
-The effect includes cleanup to prevent a completed request from updating state after that effect execution has been cleaned up.
+When the application starts:
 
-React Strict Mode can execute an additional setup-and-cleanup cycle during development.
+1. AuthProvider begins with a loading state.
+2. Its useEffect initiates session restoration.
+3. The frontend sends a request to the refresh endpoint.
+4. The browser includes the refresh-token cookie.
+5. The backend validates the token using MySQL.
+6. The backend rotates the refresh token.
+7. The backend issues a new access token.
+8. The frontend updates authentication state.
+9. The loading state finishes.
 
-Because refresh tokens rotate, concurrent refresh calls can interfere with one another. The implementation shares a refresh Promise so overlapping effect executions can reuse the same request.
+This prevents the frontend from immediately treating a user as unauthenticated while session restoration is still in progress.
 
-This is a frontend deduplication measure. Production systems should also handle concurrency and token rotation atomically on the backend.
+### Shared Refresh Promise
 
-## 13. Protected Routes
+React Strict Mode can expose duplicate effect execution during development.
 
-The `ProtectedRoute` component checks authentication and optionally allowed roles.
+Our implementation uses a shared module-level refresh Promise to prevent multiple simultaneous session-restoration requests from independently performing refresh operations.
 
-Its decision sequence is:
+Requests that need the same refresh operation can share its Promise instead of starting separate refresh operations.
 
-1. If `isLoading` is true, show a loading state.
-2. If there is no authenticated user, redirect to `/login`.
-3. If allowed roles were specified and the user's role is not included, redirect to `/unauthorized`.
-4. Otherwise, render the nested route using `Outlet`.
+---
 
-The login redirect saves the original location in navigation state. After login, the application can return the user to the requested page.
+## 12. Protected Routes and Role-Based UI
 
-## 14. Role-Based Authorization
+React Router is used to control which pages are accessible.
 
-The project uses these roles:
+### ProtectedRoute
 
-- `user`
-- `moderator`
-- `admin`
+The protected route checks authentication state.
 
-The frontend can hide links that the current role should not see. For example, the Admin navigation link is shown only to admins.
+- If authentication is still loading, it waits.
+- If the user is unauthenticated, it redirects to login.
+- If authenticated, it renders the protected route using Outlet.
 
-However, frontend checks are not sufficient for security. A user can manually enter a URL or call the API directly.
+### Role-Based Authorization
 
-The backend therefore uses:
+Role checks determine whether a user should access a particular frontend section.
 
-- `authenticate` to verify the access token.
-- `authorizeRoles('admin')` to restrict the admin endpoint.
+For example:
 
-The backend returns an authentication error when a valid authenticated identity is missing, and a forbidden response when an authenticated user lacks the required role.
+- Normal user: dashboard.
+- Admin: dashboard and admin panel.
 
-The frontend provides navigation and presentation; the backend enforces access control.
+If the user's role is insufficient, the application displays or redirects to the unauthorized page.
 
-## 15. Logout
+However, frontend route protection is only a user-experience feature. The backend must independently enforce authorization.
 
-The frontend calls `/api/auth/logout`.
+---
 
-The backend hashes the refresh cookie, deletes its stored token record, and clears the cookie using matching cookie-path settings.
+## 13. Backend Middleware
 
-The frontend clears the user and access token from React state.
+### Authentication Middleware
 
-Revoking a refresh token prevents its reuse for future refreshes. An already-issued access token can remain valid until expiry unless the backend implements additional access-token revocation checks.
+The authentication middleware:
 
-## 16. API Endpoints
+1. Reads the Authorization header.
+2. Extracts the Bearer token.
+3. Verifies the JWT signature and expiration.
+4. Identifies the authenticated user.
+5. Attaches authenticated information to the request.
+6. Passes control to the next middleware or route handler.
 
-| Method | Endpoint | Purpose |
-|---|---|---|
-| POST | `/api/auth/register` | Register a normal user |
-| POST | `/api/auth/login` | Verify credentials and issue tokens |
-| POST | `/api/auth/refresh` | Rotate refresh token and issue access token |
-| POST | `/api/auth/logout` | Revoke refresh token and clear cookie |
-| GET | `/api/auth/me` | Retrieve the current authenticated user |
-| GET | `/api/auth/admin` | Admin-only backend resource |
+### Authorization Middleware
 
-## 17. Error Handling
+The authorization middleware checks whether the authenticated user's role is permitted to access the requested endpoint.
 
-Common HTTP statuses:
+For example:
 
-- `200 OK` — successful login, refresh, logout, or resource request.
-- `201 Created` — registration succeeded.
-- `400 Bad Request` — invalid request fields.
-- `401 Unauthorized` — missing or invalid authentication credentials.
-- `403 Forbidden` — authenticated user lacks the required role.
-- `404 Not Found` — requested user or resource does not exist.
-- `409 Conflict` — registration email already exists.
-- `500 Internal Server Error` — unexpected server-side failure.
+- A user with the admin role can access admin-only routes.
+- A normal user receives an authorization error when attempting to access an admin-only route.
 
-The frontend displays useful errors without needing to expose secrets or internal server details.
+### 401 vs 403
 
-## 18. Current Storage Limitation
+401 Unauthorized:
+The request does not have valid authentication credentials.
 
-The current `UserRepository` stores users and refresh-token records in in-memory Maps.
+Examples:
+- Missing token.
+- Invalid token.
+- Expired access token.
 
-Consequences:
+403 Forbidden:
+The user is authenticated but does not have sufficient permission.
 
-- Data disappears when the backend restarts.
-- Users and sessions do not persist across server restarts.
-- In-memory storage is not appropriate for a deployed multi-instance application.
+Example:
+- A normal user attempts to access an admin-only endpoint.
 
-The next persistence step is to migrate the repository to MySQL and use appropriate constraints, indexes, transactions, and secure configuration.
+---
 
-## 19. Verification Completed
+# PART TWO — MYSQL DATABASE MIGRATION
 
-The following checks passed during development:
+## 14. Why We Migrated from In-Memory Storage
 
-- Backend TypeScript typecheck.
-- Backend production build.
-- Frontend TypeScript check through `tsc -b`.
-- Frontend Vite production build.
-- Registration and login.
-- Refresh-cookie issuance.
-- Session restoration after browser reload.
+The original implementation used JavaScript Maps for storing:
+
+- Users.
+- Refresh-token records.
+
+An in-memory Map stores information in the running Node.js process.
+
+Problem:
+
+When the backend process stops or restarts, the stored data disappears.
+
+This is unsuitable for persistent application accounts and sessions.
+
+We migrated the storage layer to MySQL.
+
+### Before Migration
+
+AuthService
+    |
+    v
+UserRepository
+    |
+    v
+JavaScript Maps
+    |
+    v
+Process memory
+
+### After Migration
+
+AuthService
+    |
+    v
+UserRepository
+    |
+    v
+mysql2
+    |
+    v
+MySQL database
+
+The business logic and repository interface were preserved while the storage implementation changed.
+
+---
+
+## 15. MySQL Database Structure
+
+Database name:
+
+week7_auth_demo
+
+We created two tables.
+
+### users
+
+| Column | Purpose |
+|---|---|
+| id | Unique user identifier |
+| name | User's name |
+| email | Unique email address |
+| password_hash | bcrypt password hash |
+| role | user, moderator, or admin |
+| created_at | Registration timestamp |
+
+Important constraints:
+
+- `id` is the primary key.
+- `email` has a unique constraint.
+- `role` uses an ENUM.
+- `password_hash` stores the hashed password.
+
+### refresh_tokens
+
+| Column | Purpose |
+|---|---|
+| token_hash | SHA-256 hash of refresh token |
+| user_id | Associated user ID |
+| expires_at | Expiration timestamp |
+| created_at | Token creation timestamp |
+
+Important constraints:
+
+- `token_hash` is the primary key.
+- `user_id` references `users(id)`.
+- The foreign key uses `ON DELETE CASCADE`.
+- Indexes support queries by user ID and expiration.
+
+### Relationship
+
+One user can have multiple refresh-token records over time or across sessions.
+
+Relationship:
+
+users (1) -------- (many) refresh_tokens
+
+The `user_id` foreign key connects each refresh-token record to its user.
+
+---
+
+## 16. MySQL Connection Pool
+
+We implemented the database connection in:
+
+src/config/database.ts
+
+We use:
+
+mysql2/promise
+
+The database configuration reads connection details from environment variables:
+
+- DB_HOST
+- DB_PORT
+- DB_USER
+- DB_PASSWORD
+- DB_NAME
+
+### Why use a connection pool?
+
+A connection pool maintains reusable database connections.
+
+Instead of opening and closing a new connection for every query, the application can reuse available connections.
+
+Our configuration includes:
+
+- waitForConnections
+- connectionLimit
+- queueLimit
+- enableKeepAlive
+
+The connection pool is shared by the repository.
+
+---
+
+## 17. Environment Variables
+
+The backend `.env` file contains database configuration.
+
+Example:
+
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=YOUR_MYSQL_PASSWORD
+DB_NAME=week7_auth_demo
+
+The actual password must remain local and must not be committed to Git.
+
+Environment variables separate configuration and secrets from application source code.
+
+---
+
+## 18. UserRepository — Database Implementation
+
+File:
+
+src/repos/user.repo.ts
+
+The MySQL repository implements the database operations required by the authentication service.
+
+### findByEmail(email)
+
+- Normalizes the email.
+- Queries the users table.
+- Returns the matching user or null.
+
+### findById(id)
+
+- Searches by user ID.
+- Returns the user or null.
+
+### create(user)
+
+- Inserts a new user into MySQL.
+- Stores the password hash, not the original password.
+- Returns the created user data.
+
+### saveRefreshToken(record)
+
+- Inserts a refresh-token hash.
+- Associates it with the user ID.
+- Stores its expiration timestamp.
+
+### findRefreshToken(tokenHash)
+
+- Searches for a refresh-token record.
+- Returns the associated user ID and expiry information.
+
+### deleteRefreshToken(tokenHash)
+
+- Deletes the matching refresh-token record.
+
+### Parameterized Queries
+
+We use placeholders such as `?` in SQL queries.
+
+Example:
+
+SELECT id, name, email
+FROM users
+WHERE email = ?
+LIMIT 1
+
+Values are passed separately to the database driver.
+
+This helps prevent SQL injection by avoiding direct insertion of user input into SQL strings.
+
+---
+
+## 19. Why We Preserved the Repository Pattern
+
+The repository separates database operations from business logic.
+
+AuthService should not need to know whether users are stored in:
+
+- A JavaScript Map.
+- MySQL.
+- PostgreSQL.
+- Another storage system.
+
+It calls repository methods instead.
+
+This means the storage implementation can change without rewriting the authentication flow, provided the repository interface remains compatible.
+
+We retained the original in-memory repository as a reference:
+
+src/repos/InMemouser.repo.ts
+
+The active routes and service import:
+
+src/repos/user.repo.ts
+
+The active implementation uses MySQL.
+
+---
+
+## 20. MySQL Persistence Verification
+
+We manually verified the migration using MySQL CLI and Postman.
+
+### Registration
+
+A test user was registered successfully.
+
+The record appeared in:
+
+users
+
+### Refresh Token Persistence
+
+A refresh-token record appeared in:
+
+refresh_tokens
+
+The database stored its hash rather than the original token.
+
+### Refresh Rotation
+
+Verified:
+
+- Old refresh-token record was invalidated.
+- New refresh-token hash was stored.
+- User association remained correct.
+
+### Logout
+
+Verified:
+
+- The refresh-token record was deleted.
+- The old token could no longer be used to restore a session.
+
+### Backend Restart
+
+Verified:
+
+- User data remained in MySQL after restarting the backend.
+- A previously issued refresh-token session could be restored.
+- A new access token was generated.
+
+These checks demonstrate that the MySQL-backed authentication flow works across backend restarts.
+
+---
+
+## 21. CORS and Cookie Configuration
+
+The frontend and backend run on different development ports.
+
+Frontend:
+
+http://localhost:5173
+
+Backend:
+
+http://localhost:5000
+
+The backend must allow the frontend origin and credentials.
+
+Our implementation uses:
+
+- CORS with the frontend origin.
+- `credentials: true`.
+- Cookie parsing middleware.
+- HttpOnly refresh-token cookies.
+
+The frontend API requests that need cookies use:
+
+credentials: "include"
+
+For production, cookie security settings, HTTPS, SameSite policy, domain configuration, and CSRF protection must be reviewed according to the deployment environment.
+
+---
+
+## 22. Important Concepts to Remember
+
+| Concept | Meaning |
+|---|---|
+| Authentication | Verifies identity |
+| Authorization | Checks access permissions |
+| JWT | Signed token carrying claims |
+| Access token | Short-lived API authorization token |
+| Refresh token | Used to obtain a new access token |
+| bcrypt | Password hashing |
+| SHA-256 | Hashing used for refresh-token storage |
+| HttpOnly | Prevents JavaScript from reading a cookie |
+| React Context | Shares authentication state |
+| useEffect | Handles side effects such as session restoration |
+| Outlet | Renders matched nested routes |
+| Middleware | Processes requests before route handlers |
+| Connection pool | Reuses database connections |
+| Repository | Separates persistence from business logic |
+| Foreign key | Enforces a relationship between database tables |
+| Parameterized query | Separates SQL structure from supplied values |
+| Token rotation | Replaces an existing refresh token with a new one |
+
+---
+
+## 23. Final Project Understanding
+
+The complete authentication flow:
+
+### Registration
+
+React UI
+    |
+    v
+Registration API
+    |
+    v
+AuthService
+    |
+    v
+bcrypt password hashing
+    |
+    v
+UserRepository
+    |
+    v
+MySQL users table
+
+### Login
+
+React UI
+    |
+    v
+Login API
+    |
+    v
+AuthService
+    |
+    v
+Find user and verify password
+    |
+    v
+Generate access and refresh tokens
+    |
+    v
+Store refresh-token hash in MySQL
+    |
+    v
+Send access token and HttpOnly cookie
+
+### Protected API Request
+
+React UI
+    |
+    v
+Authorization: Bearer ACCESS_TOKEN
+    |
+    v
+Authentication middleware
+    |
+    v
+JWT verification
+    |
+    v
+Authorization middleware (when required)
+    |
+    v
+Protected route
+
+### Session Refresh
+
+Browser sends refresh cookie
+    |
+    v
+Refresh API
+    |
+    v
+Hash token and query MySQL
+    |
+    v
+Validate token
+    |
+    v
+Rotate refresh token
+    |
+    v
+Issue new access token
+
+### Logout
+
+Browser sends refresh cookie
+    |
+    v
+Logout API
+    |
+    v
+Find token hash
+    |
+    v
+Delete refresh-token record
+    |
+    v
+Clear cookie
+
+---
+
+## 24. Final Implementation Status
+
+Completed:
+
+- JWT authentication.
+- bcrypt password hashing.
+- Access-token handling.
+- Refresh-token generation.
+- Refresh-token hashing and storage.
+- HttpOnly refresh-token cookies.
 - Refresh-token rotation.
-- Logout and refresh-token revocation.
-- Normal-user denial of admin access.
-- Admin access to the protected admin page.
+- Logout revocation.
+- React authentication context.
+- Session restoration.
+- Protected routes.
+- Role-based frontend access.
+- Backend role authorization.
+- MySQL database integration.
+- Persistent users and refresh-token records.
+- Session restoration after backend restart.
+- TypeScript typecheck.
+- Production build.
+- Manual Postman and MySQL verification.
 
-## 20. Final Lessons
+Automated tests were intentionally excluded from this migration's final scope.
 
-This assignment connected React authentication state to a real backend session flow.
+The old in-memory repository remains as a reference implementation, while the active application uses the MySQL repository.
 
-Key lessons:
-
-1. Authentication and authorization solve different problems.
-2. JWT signatures must be verified on the backend.
-3. Passwords should be hashed with a suitable password-hashing algorithm.
-4. Access tokens and refresh tokens have different responsibilities.
-5. Refresh-token rotation must invalidate old tokens.
-6. HttpOnly cookies reduce direct JavaScript access to refresh credentials.
-7. React Context shares auth state; it does not enforce backend security.
-8. Route guards improve user experience but do not replace server authorization.
-9. Production systems need persistent storage and concurrency-safe token rotation.
-10. Successful builds are important, but runtime behavior must also be tested.
+**Main takeaway:** We changed the persistence layer without needing to redesign the entire authentication system. The repository pattern allowed us to move from process memory to MySQL while preserving the authentication service and its responsibilities.

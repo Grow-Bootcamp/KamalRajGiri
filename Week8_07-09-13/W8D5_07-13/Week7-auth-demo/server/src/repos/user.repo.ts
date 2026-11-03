@@ -1,57 +1,144 @@
-import type { User } from "../types/user.js";
 
-export interface RefreshTokenRecord{
-    tokenHash:string;
+import { db } from "../config/database.js";
+import type { User } from "../types/user.js";
+import type { ResultSetHeader, RowDataPacket } from "mysql2";
+
+export interface RefreshTokenRecord {
+    tokenHash: string;
     userId: string;
-    expiresAt:number;
+    expiresAt: number;
 }
 
-export class UserRepository{
-    private users = new Map<string, User> ();
-    private refreshTokens = new Map<string, RefreshTokenRecord>();
-// admin test 
-//     async promoteToAdmin(email: string): Promise<User | null> {
-//   const user = await this.findByEmail(email);
+interface UserRow extends RowDataPacket {
+    id: string;
+    name: string;
+    email: string;
+    password_hash: string;
+    role: User["role"];
+}
 
-//   if (!user) {
-//     return null;
-//   }
+interface RefreshTokenRow extends RowDataPacket {
+    token_hash: string;
+    user_id: string;
+    expires_at: number | string;
+}
 
-//   user.role = 'admin';
-//   this.users.set(user.id, { ...user });
+export class UserRepository {
 
-//   return { ...user };
-// }
-// admin test
-
-    async findByEmail(email:string): Promise<User | null>{
+    async findByEmail(email: string): Promise<User | null> {
         const normalizedEmail = email.trim().toLowerCase();
-        for (const user of this.users.values()){
-            if(user.email === normalizedEmail){
-                return {...user};
-            }
+
+        const [rows] = await db.execute<UserRow[]>(
+            `SELECT id, name, email, password_hash, role
+             FROM users
+             WHERE email = ?
+             LIMIT 1`,
+            [normalizedEmail]
+        );
+
+        if (rows.length === 0) {
+            return null;
         }
-        return null;
-    }
-    async findById(id:string):Promise<User | null>{
-        const user = this.users.get(id);
-        return user ? {...user} : null;
-    }
-    async create(user:User):Promise<User>{
-        this.users.set(user.id, {...user});
-        return {...user};
+
+        const row = rows[0];
+
+        return {
+            id: row.id,
+            name: row.name,
+            email: row.email,
+            passwordHash: row.password_hash,
+            role: row.role,
+        };
     }
 
-    async saveRefreshToken(record: RefreshTokenRecord,) : Promise<void>{
-        this.refreshTokens.set(record.tokenHash, {...record});
+    async findById(id: string): Promise<User | null> {
+        const [rows] = await db.execute<UserRow[]>(
+            `SELECT id, name, email, password_hash, role
+             FROM users
+             WHERE id = ?
+             LIMIT 1`,
+            [id]
+        );
+
+        if (rows.length === 0) {
+            return null;
+        }
+
+        const row = rows[0];
+
+        return {
+            id: row.id,
+            name: row.name,
+            email: row.email,
+            passwordHash: row.password_hash,
+            role: row.role,
+        };
     }
 
-    async findRefreshToken(tokenHash:string,): Promise<RefreshTokenRecord | null>{
-        const record = this.refreshTokens.get(tokenHash);
-        return record ? {...record} : null;
+    async create(user: User): Promise<User> {
+        await db.execute<ResultSetHeader>(
+            `INSERT INTO users
+                (id, name, email, password_hash, role)
+             VALUES (?, ?, ?, ?, ?)`,
+            [
+                user.id,
+                user.name,
+                user.email.trim().toLowerCase(),
+                user.passwordHash,
+                user.role,
+            ]
+        );
+
+        return {
+            ...user,
+            email: user.email.trim().toLowerCase(),
+        };
     }
 
-    async deleteRefreshToken(tokenHash:string):Promise<void>{
-        this.refreshTokens.delete(tokenHash);
+    async saveRefreshToken(
+        record: RefreshTokenRecord
+    ): Promise<void> {
+        await db.execute<ResultSetHeader>(
+            `INSERT INTO refresh_tokens
+                (token_hash, user_id, expires_at)
+             VALUES (?, ?, ?)`,
+            [
+                record.tokenHash,
+                record.userId,
+                record.expiresAt,
+            ]
+        );
+    }
+
+    async findRefreshToken(
+        tokenHash: string
+    ): Promise<RefreshTokenRecord | null> {
+        const [rows] = await db.execute<RefreshTokenRow[]>(
+            `SELECT token_hash, user_id, expires_at
+             FROM refresh_tokens
+             WHERE token_hash = ?
+             LIMIT 1`,
+            [tokenHash]
+        );
+
+        if (rows.length === 0) {
+            return null;
+        }
+
+        const row = rows[0];
+
+        return {
+            tokenHash: row.token_hash,
+            userId: row.user_id,
+            expiresAt: Number(row.expires_at),
+        };
+    }
+
+    async deleteRefreshToken(tokenHash: string): Promise<void> {
+        await db.execute<ResultSetHeader>(
+            `DELETE FROM refresh_tokens
+             WHERE token_hash = ?`,
+            [tokenHash]
+        );
     }
 }
