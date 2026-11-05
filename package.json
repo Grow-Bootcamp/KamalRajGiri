@@ -2,7 +2,8 @@
   "dependencies": {
     "express": "^5.2.1",
     "morgan": "^1.12.1",
-    "node-cron": "^4.6.0"
+    "node-cron": "^4.6.0",
+    "react-router-dom": "^7.18.5"
   },
   "devDependencies": {
     "typescript": "^7.0.2"
