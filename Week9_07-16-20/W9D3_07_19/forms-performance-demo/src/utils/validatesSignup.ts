@@ -1,7 +1,5 @@
 import type { SignupValues, SignupErrors }  from "../types/signup"
 
-
-
 export function validateSignup(values: SignupValues): SignupErrors {
     const errors: SignupErrors = {};
 
