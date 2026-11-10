@@ -1,0 +1,372 @@
+
+/* ---------- Global styles ---------- */
+
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  color: #1e293b;
+  background: #f4f6fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, #e9e7ff, transparent 35%),
+    #f4f6fb;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+/* ---------- Main layout ---------- */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 18px;
+}
+
+.container {
+  width: 100%;
+  max-width: 760px;
+  margin: auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  font-size: 30px;
+  margin: 0 0 8px;
+  color: #172554;
+}
+
+.page-header p {
+  color: #64748b;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* ---------- Cards ---------- */
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.06);
+  margin-bottom: 20px;
+}
+
+.card h2 {
+  margin-top: 0;
+  color: #172554;
+}
+
+.card p {
+  color: #64748b;
+  line-height: 1.7;
+}
+
+/* ---------- Login ---------- */
+
+.login-card {
+  max-width: 440px;
+  margin: auto;
+  text-align: center;
+}
+
+.login-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background: #eef2ff;
+  font-size: 28px;
+}
+
+.google-button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px 20px;
+  background: #ffffff;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.google-button:hover {
+  background: #f8fafc;
+  border-color: #6366f1;
+  transform: translateY(-1px);
+}
+
+/* ---------- Profile ---------- */
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.profile-avatar {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #e2e8f0;
+  border: 3px solid #eef2ff;
+}
+
+.profile-info h2 {
+  margin: 0 0 5px;
+}
+
+.profile-info p {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Product ---------- */
+
+.product-card {
+  background: #fafaff;
+  border: 1px solid #e0e7ff;
+  border-radius: 16px;
+  padding: 22px;
+  margin-top: 22px;
+}
+
+.product-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.product-name {
+  font-size: 19px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.product-price {
+  font-size: 27px;
+  font-weight: 800;
+  color: #4f46e5;
+  margin: 16px 0;
+}
+
+/* ---------- Buttons ---------- */
+
+.primary-button,
+.logout-button,
+.secondary-button {
+  border: none;
+  border-radius: 10px;
+  padding: 13px 20px;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.primary-button {
+  width: 100%;
+  color: white;
+  background: #4f46e5;
+}
+
+.primary-button:hover {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+
+.primary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.logout-button {
+  background: #fff1f2;
+  color: #be123c;
+}
+
+.logout-button:hover {
+  background: #ffe4e6;
+}
+
+.secondary-button {
+  background: #eef2ff;
+  color: #4338ca;
+}
+
+.secondary-button:hover {
+  background: #e0e7ff;
+}
+
+/* ---------- Payment status ---------- */
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.status-paid {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+.status-pending {
+  color: #a16207;
+  background: #fef3c7;
+}
+
+.status-failed {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+.payment-message {
+  padding: 16px;
+  border-radius: 12px;
+  margin-top: 16px;
+  line-height: 1.6;
+}
+
+.payment-success {
+  color: #166534;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.payment-pending {
+  color: #92400e;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+}
+
+.payment-failed {
+  color: #991b1b;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+/* ---------- Result page ---------- */
+
+.result-card {
+  max-width: 520px;
+  margin: auto;
+  text-align: center;
+}
+
+.result-icon {
+  width: 82px;
+  height: 82px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  font-size: 38px;
+}
+
+.result-icon.success {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.result-icon.pending {
+  background: #fef3c7;
+  color: #a16207;
+}
+
+.result-icon.failed {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* ---------- Loading and errors ---------- */
+
+.loading {
+  text-align: center;
+  padding: 30px;
+  color: #64748b;
+}
+
+.error-message {
+  padding: 13px;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  margin-top: 15px;
+}
+
+/* ---------- Footer / actions ---------- */
+
+.action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.divider {
+  height: 1px;
+  background: #e2e8f0;
+  margin: 24px 0;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 600px) {
+  .card {
+    padding: 22px 18px;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .profile-header {
+    align-items: flex-start;
+  }
+
+  .profile-avatar {
+    width: 60px;
+    height: 60px;
+  }
+
+  .action-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .action-row button {
+    width: 100%;
+  }
+}
