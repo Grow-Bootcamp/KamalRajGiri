@@ -107,7 +107,7 @@ async verifyOtp(challengeId: string, otp: string) {
     verified: true,
     accessToken,
     tokenType: 'Bearer',
-    expiresIn: 900,
+    expiresIn: 1800,
     user,
   };
 }
