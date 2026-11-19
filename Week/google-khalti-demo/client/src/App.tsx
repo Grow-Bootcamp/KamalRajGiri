@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+import "./App.css";
 
 const API_URL = "http://localhost:5000";
 
@@ -10,6 +11,10 @@ type User = {
   picture?: string;
 };
 
+type PaymentStatusResponse = {
+  paid: boolean;
+};
+
 // 1. Login page
 function Login() {
   function handleGoogleLogin() {
@@ -17,13 +22,27 @@ function Login() {
   }
 
   return (
-    <main>
-      <h1>Google Khalti Demo</h1>
-      <p>Sign in to continue.</p>
+    <main className="app">
+      <div className="container">
+        <header className="page-header">
+          <h1>Google Khalti Demo</h1>
+          <p>Secure authentication and online payment demonstration.</p>
+        </header>
 
-      <button onClick={handleGoogleLogin}>
-        Continue with Google
-      </button>
+        <section className="card login-card">
+          <div className="login-icon">🔐</div>
+
+          <h2>Welcome</h2>
+          <p>Sign in with your Google account to continue.</p>
+
+          <button
+            className="google-button"
+            onClick={handleGoogleLogin}
+          >
+            Continue with Google
+          </button>
+        </section>
+      </div>
     </main>
   );
 }
@@ -37,7 +56,8 @@ function Profile() {
   const [paymentLoading, setPaymentLoading] = useState(false);
   const [paymentError, setPaymentError] = useState("");
   const [isPaid, setIsPaid] = useState(false);
-const [paymentStatusLoading, setPaymentStatusLoading] = useState(true);
+  const [paymentStatusLoading, setPaymentStatusLoading] =
+    useState(true);
 
   // Fetch authenticated user
   useEffect(() => {
@@ -68,33 +88,32 @@ const [paymentStatusLoading, setPaymentStatusLoading] = useState(true);
     fetchProfile();
   }, []);
 
-
+  // Fetch payment status
   useEffect(() => {
-  const checkPaymentStatus = async () => {
-    try {
-      const response = await fetch(
-        `${API_URL}/api/payments/status`,
-        {
-          credentials: "include",
+    async function checkPaymentStatus() {
+      try {
+        const response = await fetch(
+          `${API_URL}/api/payments/status`,
+          {
+            credentials: "include",
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Could not fetch payment status.");
         }
-      );
 
-      if (!response.ok) {
-        throw new Error("Could not fetch payment status.");
+        const data: PaymentStatusResponse = await response.json();
+        setIsPaid(data.paid);
+      } catch (error) {
+        console.error("Payment status error:", error);
+      } finally {
+        setPaymentStatusLoading(false);
       }
-
-      const data = await response.json();
-
-      setIsPaid(data.paid);
-    } catch (error) {
-      console.error("Payment status error:", error);
-    } finally {
-      setPaymentStatusLoading(false);
     }
-  };
 
-  checkPaymentStatus();
-}, []);
+    checkPaymentStatus();
+  }, []);
 
   // Logout
   async function handleLogout() {
@@ -135,7 +154,6 @@ const [paymentStatusLoading, setPaymentStatusLoading] = useState(true);
         throw new Error("Khalti did not return a payment URL.");
       }
 
-      // Redirect to Khalti checkout
       window.location.href = data.payment_url;
     } catch (error) {
       setPaymentError(
@@ -149,64 +167,126 @@ const [paymentStatusLoading, setPaymentStatusLoading] = useState(true);
   }
 
   if (loading) {
-    return <p>Loading profile...</p>;
+    return (
+      <main className="app">
+        <div className="container">
+          <div className="card loading">
+            Loading profile...
+          </div>
+        </div>
+      </main>
+    );
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return (
+      <main className="app">
+        <div className="container">
+          <div className="card error-message">{error}</div>
+        </div>
+      </main>
+    );
   }
 
   if (!user) {
-    return <p>No user information found.</p>;
+    return (
+      <main className="app">
+        <div className="container">
+          <div className="card loading">
+            No user information found.
+          </div>
+        </div>
+      </main>
+    );
   }
 
   return (
-    <main>
-      <h1>Welcome, {user.name}</h1>
+    <main className="app">
+      <div className="container">
+        <header className="page-header">
+          <h1>My Dashboard</h1>
+          <p>Manage your profile and product payment.</p>
+        </header>
 
-      {user.picture && (
-        <img
-          src={user.picture}
-          alt="Google profile"
-          width={100}
-        />
-      )}
+        {/* Profile card */}
+        <section className="card">
+          <div className="profile-header">
+            {user.picture && (
+              <img
+                className="profile-avatar"
+                src={user.picture}
+                alt="Google profile"
+              />
+            )}
 
-      <p>Email: {user.email}</p>
+            <div className="profile-info">
+              <h2>Welcome, {user.name}</h2>
+              <p>{user.email}</p>
+            </div>
+          </div>
 
-      <button onClick={handleLogout}>
-        Logout
-      </button>
+          <div className="divider" />
 
-      <hr />
+          <div className="action-row">
+            <span>Signed in with Google</span>
 
-      <section>
-        <h2>Demo Product</h2>
-        <p>Sample product for Khalti payment testing.</p>
-        <p>Price: NPR 100</p>
+            <button
+              className="logout-button"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </div>
+        </section>
 
-{paymentStatusLoading ? (
-    <p>Checking payment status...</p>
-  ) : isPaid ? (
-    <div>
-      <h3>Payment Status: Paid</h3>
-      <p>Your payment has been successfully verified.</p>
-    </div>
-  ) : (
-    <button
-      onClick={handlePayment}
-      disabled={paymentLoading}
-    >
-      {paymentLoading
-        ? "Redirecting to Khalti..."
-        : "Pay NPR 100 with Khalti"}
-    </button>
-  )}
+        {/* Product card */}
+        <section className="card">
+          <h2>Your Product</h2>
+          <p>Sample product for Khalti payment testing.</p>
 
-        {paymentError && (
-          <p role="alert">{paymentError}</p>
-        )}
-      </section>
+          <div className="product-card">
+            <div className="product-top">
+              <span className="product-name">
+                Demo Product
+              </span>
+
+              {isPaid && !paymentStatusLoading && (
+                <span className="status status-paid">
+                  ✓ PAID
+                </span>
+              )}
+            </div>
+
+            <p className="product-price">NPR 100</p>
+
+            {paymentStatusLoading ? (
+              <p className="loading">
+                Checking payment status...
+              </p>
+            ) : isPaid ? (
+              <div className="payment-message payment-success">
+                ✓ Your payment has been successfully verified.
+              </div>
+            ) : (
+              <button
+                className="primary-button"
+                onClick={handlePayment}
+                disabled={paymentLoading}
+              >
+                {paymentLoading
+                  ? "Redirecting to Khalti..."
+                  : "Pay NPR 100 with Khalti"}
+              </button>
+            )}
+
+            {paymentError && (
+              <div className="error-message" role="alert">
+                {paymentError}
+              </div>
+            )}
+          </div>
+        </section>
+      </div>
     </main>
   );
 }
@@ -222,21 +302,50 @@ function PaymentResult() {
     pending: "Payment is pending verification.",
   };
 
+  const resultType =
+    status === "success"
+      ? "success"
+      : status === "pending"
+        ? "pending"
+        : "failed";
+
+  const resultIcon =
+    resultType === "success"
+      ? "✓"
+      : resultType === "pending"
+        ? "⌛"
+        : "✕";
+
   return (
-    <main>
-      <h1>Payment Result</h1>
+    <main className="app">
+      <div className="container">
+        <section className="card result-card">
+          <div className={`result-icon ${resultType}`}>
+            {resultIcon}
+          </div>
 
-      <h2>
-        {messages[status ?? ""] ?? "Unknown payment result."}
-      </h2>
+          <h1>Payment Result</h1>
 
-      <button
-        onClick={() => {
-          window.location.href = "/profile";
-        }}
-      >
-        Return to Profile
-      </button>
+          <h2>
+            {messages[status ?? ""] ?? "Unknown payment result."}
+          </h2>
+
+          <p>
+            {status === "success"
+              ? "Your transaction has been verified by Khalti."
+              : "You can return to your profile to check your payment status."}
+          </p>
+
+          <button
+            className="primary-button"
+            onClick={() => {
+              window.location.href = "/profile";
+            }}
+          >
+            Go to Profile
+          </button>
+        </section>
+      </div>
     </main>
   );
 }
